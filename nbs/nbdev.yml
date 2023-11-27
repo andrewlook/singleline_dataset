@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "singleline-dataset"
+  site-url: "https://andrewlook.github.io/singleline-dataset"
+  description: "Processing Single Line Drawing Data to Train SketchRNN"
+  repo-branch: main
+  repo-url: "https://github.com/andrewlook/singleline-dataset"
