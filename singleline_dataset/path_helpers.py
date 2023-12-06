@@ -4,7 +4,7 @@
 __all__ = ['to_points', 'discretize_path', 'discretize_paths']
 
 # %% ../nbs/02_path_helpers.ipynb 5
-import numpy
+import numpy as np
 
 
 def to_points(parsed_path, n):
@@ -20,6 +20,9 @@ def to_points(parsed_path, n):
     return acc
 
 # %% ../nbs/02_path_helpers.ipynb 6
+import numpy as np
+
+
 def discretize_path(path, total_n=1000, min_n=3):
     chunk_size = path.length() / total_n
     subpaths = []
@@ -33,6 +36,9 @@ def discretize_path(path, total_n=1000, min_n=3):
     return np.array(subpaths, dtype=object)
 
 # %% ../nbs/02_path_helpers.ipynb 7
+import numpy as np
+
+
 def discretize_paths(paths, total_n=1000, min_n=3):
     all_strokes = []
     total_length = sum([p.length() for p in paths])
