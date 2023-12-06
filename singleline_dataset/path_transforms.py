@@ -22,8 +22,6 @@ def rescale_strokes(all_strokes, target_size):
     ]
     return np.array(all_rescaled_strokes, dtype=object)
 
-
-
 # %% ../nbs/04_path_transforms.ipynb 6
 def transform_paths(paths, global_transform=None):
     if not global_transform:
