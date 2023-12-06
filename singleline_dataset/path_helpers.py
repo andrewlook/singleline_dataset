@@ -4,6 +4,9 @@
 __all__ = ['to_points', 'discretize_path', 'discretize_paths']
 
 # %% ../nbs/02_path_helpers.ipynb 5
+import numpy
+
+
 def to_points(parsed_path, n):
     prev = None
     acc = []

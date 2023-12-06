@@ -3,7 +3,10 @@
 # %% auto 0
 __all__ = ['enumerate_files', 'parse_svg', 'load_svg']
 
-# %% ../nbs/01_svg_files.ipynb 5
+# %% ../nbs/01_svg_files.ipynb 4
+import os
+
+
 def enumerate_files(input_dir):
     """Find all the files within a directory (non-recursively)"""
     files = []
@@ -12,13 +15,19 @@ def enumerate_files(input_dir):
             files.append(file)
     return files
 
-# %% ../nbs/01_svg_files.ipynb 6
+# %% ../nbs/01_svg_files.ipynb 5
+from lxml import etree
+
+
 def parse_svg(input_file):
     """Parse the SVG XML, to allow extracting individual elements"""
     parsed = etree.parse(input_file)
     return parsed.getroot()
 
-# %% ../nbs/01_svg_files.ipynb 7
+# %% ../nbs/01_svg_files.ipynb 6
+import svgpathtools
+
+
 def load_svg(input_fname):
     """Load an SVG, returning the parsed XML as well as the SVG path elements"""
     paths, attributes, svg_attributes = svgpathtools.svg2paths(
