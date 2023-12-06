@@ -2,3 +2,5 @@ jupyterlab
 jupyterlab-quarto
 jupyterlab-vim
 nbdev
+black
+isort

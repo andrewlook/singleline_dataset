@@ -1,3 +1,5 @@
 lxml
 svgpathtools
 svgwrite
+rdp
+numpy
