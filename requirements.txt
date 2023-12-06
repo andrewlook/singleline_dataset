@@ -1,0 +1,3 @@
+lxml
+svgpathtools
+svgwrite
