@@ -46,12 +46,5 @@ def discretize_paths(paths, total_n=1000, min_n=3):
         # print(f"discretize path - path_n={path_n}, path_length={p.length()}, total_length={total_length}")
 
         strokes = discretize_path(p, path_n, min_n=min_n)
-
-        # path_transform_str = attributes[i].get('transform', None)
-        # if path_transform_str:
-        #     print(f"path_transform_st={path_transform_str}")
-        #     path_transform = build_transforms(path_transform_str)
-        #     coords = apply_transform(coords, path_transform)
-
         all_strokes.extend(strokes)
     return all_strokes

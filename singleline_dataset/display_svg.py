@@ -6,9 +6,11 @@ __all__ = ['randcolor', 'render_strokes', 'render_deltas']
 # %% ../nbs/01_display_svg.ipynb 4
 import random
 
+
 def randcolor(min_color_intensity=0, max_color_intensity=255):
     def _randc():
         return str(random.randint(min_color_intensity, max_color_intensity))
+
     return f"rgb({_randc()},{_randc()},{_randc()})"
 
 # %% ../nbs/01_display_svg.ipynb 5
@@ -16,22 +18,21 @@ import svgwrite
 
 
 def render_strokes(strokes, target_size=200, stroke_width=1):
-    dwg = svgwrite.Drawing(size=(f'{target_size}px', f'{target_size}px'), debug=True)
+    dwg = svgwrite.Drawing(size=(f"{target_size}px", f"{target_size}px"), debug=True)
     the_color = randcolor()
-    
+
     for points in strokes:
         prev = None
         for row in points:
             x, y = row[0], row[1]
             pt = (x, y)
             if prev:
-                #dist = np.linalg.norm(np.array(pt) - np.array(prev))
+                # dist = np.linalg.norm(np.array(pt) - np.array(prev))
                 # if dist < 60:
-                dwg.add(dwg.line(prev, pt, stroke=the_color, stroke_width=stroke_width))        
+                dwg.add(dwg.line(prev, pt, stroke=the_color, stroke_width=stroke_width))
             prev = pt
         the_color = randcolor()
     return dwg
-
 
 # %% ../nbs/01_display_svg.ipynb 6
 def render_deltas(deltas, target_size=200, color_mode=True, stroke_width=1, factor=1.0):
@@ -80,7 +81,5 @@ def render_deltas(deltas, target_size=200, color_mode=True, stroke_width=1, fact
 
         lift_pen = deltas[i, 2]
 
-        dwg.add(
-            dwg.path(p).stroke(the_color, stroke_width).fill(the_color)
-        )
+        dwg.add(dwg.path(p).stroke(the_color, stroke_width).fill(the_color))
     return dwg
