@@ -12,8 +12,8 @@ def strokes_to_points(strokes):
     all = []
     for s in strokes:
         eoc_col = np.zeros((s.shape[0], 1))
-        eoc_col[-1,0] = 1
-        all.append(np.concatenate([s[:,:2], eoc_col], axis=1))
+        eoc_col[-1, 0] = 1
+        all.append(np.concatenate([s[:, :2], eoc_col], axis=1))
     return np.vstack(all)
 
 # %% ../nbs/05_stroke3.ipynb 6
@@ -21,11 +21,8 @@ def points_to_deltas(points):
     p2 = points.copy()
     # first row should stay the same
     # cols 0,1 of every row onwards should be a delta from the previous row.
-    p2[1:,:2] = points[1:,:2] - points[:-1,:2]
+    p2[1:, :2] = points[1:, :2] - points[:-1, :2]
     return p2
-
-
-
 
 # %% ../nbs/05_stroke3.ipynb 7
 def strokes_to_deltas(strokes):
@@ -34,11 +31,10 @@ def strokes_to_deltas(strokes):
 
 # %% ../nbs/05_stroke3.ipynb 8
 def deltas_to_points(_seq):
-    seq = np.zeros_like(_seq)    
+    seq = np.zeros_like(_seq)
     seq[:, 0:2] = np.cumsum(_seq[:, 0:2], axis=0)
     seq[:, 2] = _seq[:, 2]
     return seq
-
 
 # %% ../nbs/05_stroke3.ipynb 9
 def points_to_strokes(_seq):

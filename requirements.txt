@@ -3,3 +3,4 @@ svgpathtools
 svgwrite
 rdp
 numpy
+matplotlib
