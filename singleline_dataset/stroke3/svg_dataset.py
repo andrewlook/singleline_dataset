@@ -3,20 +3,20 @@
 # %% auto 0
 __all__ = ['stroke_rdp_deltas', 'svgs_to_deltas']
 
+# %% ../../nbs/07_svg_dataset.ipynb 4
+from .path_transforms import *
+from .stroke3 import *
+
 # %% ../../nbs/07_svg_dataset.ipynb 6
-from .path_transforms import svg_to_strokes
-from .stroke3 import strokes_to_deltas, rdp_strokes
-
-
 def stroke_rdp_deltas(rescaled_strokes, epsilon=2.0):
-    rdp_strokes = rdp_strokes(rescaled_strokes, epsilon)
-    deltas = strokes_to_deltas(rdp_strokes)
+    rdp_result = rdp_strokes(rescaled_strokes, epsilon)
+    deltas = strokes_to_deltas(rdp_result)
 
     ## roundtrip / sanity check
-    # _rdp_strokes = stroke3.deltas_to_strokes(deltas)
-    # display_plot.plot_strokes(_rdp_strokes)
+    # _rdp_result = stroke3.deltas_to_strokes(deltas)
+    # display_plot.plot_strokes(_rdp_result)
 
-    return deltas, rescaled_strokes
+    return deltas
 
 # %% ../../nbs/07_svg_dataset.ipynb 7
 import os
@@ -80,16 +80,14 @@ def svgs_to_deltas(
                     deltas_to_strokes(deltas), fname=new_suffix(fname, ".3_deltas.png")
                 )
 
-                with open(
-                    new_suffix(fname, ".raw.svg"), "w", encoding="utf-8"
-                ) as raw_out:
+                raw_output_fname = new_suffix(fname, ".raw.svg")
+                with open(raw_output_fname, "w", encoding="utf-8") as raw_out:
                     raw_dwg = render_strokes(rescaled_strokes, target_size=target_size)
                     raw_dwg.write(raw_out, pretty=True)
                     print(f"\twrote {raw_output_fname}")
 
-                with open(
-                    new_suffix(fname, ".preproc.svg"), "w", encoding="utf-8"
-                ) as preproc_out:
+                preproc_output_fname = new_suffix(fname, ".preproc.svg")
+                with open(preproc_output_fname, "w", encoding="utf-8") as preproc_out:
                     preproc_dwg = render_deltas(deltas, target_size=target_size)
                     preproc_dwg.save(preproc_output_fname)
                     print(f"\twrote {preproc_output_fname}")

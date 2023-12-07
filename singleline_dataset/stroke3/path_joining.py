@@ -182,16 +182,18 @@ def splice_until(strokes, dist_threshold=10.0):
     for i in range(len(curr_strokes)):
         min_dist, min_l_idx, min_r_idx, k = closest_splice_pair(curr_strokes)
 
-        curr_strokes = join_splice(curr_strokes, min_l_idx, min_r_idx, k)
-
         print(f"Minimum distance: {min_dist}")
-        print(f"From {min_l_idx} ({len(strokes[min_l_idx])} points)")
-        print(f"To {min_r_idx} ({len(strokes[min_l_idx])} points)")
-        print(f"At index k={k}")
 
         if min_dist > dist_threshold:
             print("exceeded dist threshold")
             break
+
+        print(f"From {min_l_idx} ({len(strokes[min_l_idx])} points)")
+        print(f"To {min_r_idx} ({len(strokes[min_l_idx])} points)")
+        print(f"At index k={k}")
+
+        curr_strokes = join_splice(curr_strokes, min_l_idx, min_r_idx, k)
+
         all_iterations.append(curr_strokes)
     print(
         f"finished merging - len(curr_strokes) = {len(curr_strokes)}, min_dist = {min_dist}"
