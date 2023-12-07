@@ -4,3 +4,4 @@ svgwrite
 rdp
 numpy
 matplotlib
+pandas
