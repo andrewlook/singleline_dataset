@@ -5,9 +5,10 @@ website:
       - 00_svg_files.ipynb
       - 01_display_svg.ipynb
       - 01a_display_plot.ipynb
-      - 02_path_helpers.ipynb
-      - 03_stroke3.ipynb
-      - 04_transforms.ipynb
+      - 02_transforms.ipynb
+      - 03_svg_transforms.ipynb
+      - 04_path_helpers.ipynb
       - 05_path_transforms.ipynb
-      - 06_svg_transforms.ipynb
+      - 05a_path_joining.ipynb
+      - 06_stroke3.ipynb
       - 07_svg_dataset.ipynb
