@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['join_2_strokes', 'select_2_strokes', 'join_endpoints', 'closest_endpoint_pair', 'merge_closest_strokes',
-           'merge_until']
+           'merge_until', 'splice_2_strokes', 'join_splice', 'splice_until']
 
 # %% ../../nbs/05a_path_joining.ipynb 2
 import copy
@@ -118,6 +118,40 @@ def merge_until(strokes, dist_threshold=10.0):
             curr_strokes, dist_threshold=dist_threshold
         )
         print(f"[{i}] - len(curr_strokes) = {len(curr_strokes)}, min_dist = {min_dist}")
+        if min_dist > dist_threshold:
+            print("exceeded dist threshold")
+            break
+        all_iterations.append(curr_strokes)
+    print(
+        f"finished merging - len(curr_strokes) = {len(curr_strokes)}, min_dist = {min_dist}"
+    )
+    return curr_strokes, all_iterations
+
+# %% ../../nbs/05a_path_joining.ipynb 31
+def splice_2_strokes(lhs, rhs, k):
+    return np.concatenate([rhs[:k], lhs, rhs[k:]], axis=0)
+
+
+def join_splice(strokes, l_idx, r_idx, k):
+    lhs, rhs, remaining = select_2_strokes(strokes, l_idx, r_idx)
+    joined = splice_2_strokes(lhs, rhs, k)
+    return [joined] + remaining
+
+
+# | export
+def splice_until(strokes, dist_threshold=10.0):
+    curr_strokes = copy.copy(strokes)
+    all_iterations = [curr_strokes]
+    for i in range(len(curr_strokes)):
+        min_dist, min_l_idx, min_r_idx, k = closest_splice_pair(curr_strokes)
+
+        curr_strokes = join_splice(curr_strokes, min_l_idx, min_r_idx, k)
+
+        print(f"Minimum distance: {min_dist}")
+        print(f"From {min_l_idx} ({len(strokes[min_l_idx])} points)")
+        print(f"To {min_r_idx} ({len(strokes[min_l_idx])} points)")
+        print(f"At index k={k}")
+
         if min_dist > dist_threshold:
             print("exceeded dist threshold")
             break

@@ -42,6 +42,7 @@ def create_animation(
     strokes, fname="video.mp4", fps=60, target_size=200, lw=2, trailing_frames=30
 ):
     seq_length = np.vstack(strokes).shape[0]
+    print(seq_length)
 
     i = 0
     j = 0
@@ -105,7 +106,7 @@ def show_video(fname="video.mp4"):
     create_animation(strokes, fname="video.mp4", lw=2)
     show_video("video.mp4")
     """
-    video = io.open("video.mp4", "r+b").read()
+    video = io.open(fname, "r+b").read()
     encoded = base64.b64encode(video)
     html_data = f"""<video alt="video" autoplay loop>
                     <source src="data:video/mp4;base64,{encoded.decode('ascii')}" type="video/mp4" />
