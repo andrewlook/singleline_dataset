@@ -132,6 +132,7 @@ def splice_2_strokes(lhs, rhs, k):
     return np.concatenate([rhs[:k], lhs, rhs[k:]], axis=0)
 
 
+# | export
 def join_splice(strokes, l_idx, r_idx, k):
     lhs, rhs, remaining = select_2_strokes(strokes, l_idx, r_idx)
     joined = splice_2_strokes(lhs, rhs, k)
