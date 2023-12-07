@@ -23,11 +23,11 @@ import os
 
 import numpy as np
 
-from .display_svg import render_deltas, render_strokes
 from .display_plot import *
+from .display_svg import render_deltas, render_strokes
+from .path_joining import merge_until, splice_until
 from .stroke3 import *
 from .svg_files import enumerate_files
-from .path_joining import merge_until, splice_until
 
 
 def svgs_to_deltas(

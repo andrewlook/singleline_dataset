@@ -8,10 +8,9 @@ import os
 
 import numpy as np
 
-from .display_svg import *
 from .display_plot import *
-from .stroke3 import *
-from .svg_files import *
+from .display_svg import *
 from .path_joining import *
 from .path_transforms import *
 from .stroke3 import *
+from .svg_files import *

@@ -39,7 +39,9 @@ def deltas_to_points(_seq):
 # %% ../../nbs/06_stroke3.ipynb 9
 def points_to_strokes(_seq):
     strokes = np.split(_seq, np.where(_seq[:, 2] > 0)[0] + 1)
-    return strokes
+    return [
+        s for s in strokes if len(s) > 0
+    ]  # split sometimes returns an empty array at the end
 
 # %% ../../nbs/06_stroke3.ipynb 10
 def deltas_to_strokes(_seq):
