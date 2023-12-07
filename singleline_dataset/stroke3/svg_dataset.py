@@ -39,8 +39,12 @@ def svgs_to_deltas(
     epsilon=1.0,
     limit=None,
 ):
-    if output_dir and not os.path.isdir(output_dir):
-        os.makedirs(output_dir)
+    if output_dir:
+        svg_dir = os.path.join(output_dir, "svg")
+        png_dir = os.path.join(output_dir, "png")
+        for d in [svg_dir, png_dir]:
+            if not os.path.isdir(d):
+                os.makedirs(d)
 
     dataset = []
     for i, fname in enumerate(enumerate_files(input_dir)):
@@ -68,30 +72,37 @@ def svgs_to_deltas(
 
             if output_dir:
 
-                def new_suffix(fname, suffix):
-                    return os.path.join(output_dir, fname.replace(".svg", suffix))
+                def new_suffix(subdir, fname, suffix):
+                    return os.path.join(
+                        output_dir, subdir, fname.replace(".svg", suffix)
+                    )
 
                 plot_strokes(
-                    rescaled_strokes, fname=new_suffix(fname, ".0_strokes.png")
+                    rescaled_strokes, fname=new_suffix("png", fname, ".0_strokes.png")
                 )
-                plot_strokes(joined_strokes, fname=new_suffix(fname, ".1_joined.png"))
-                plot_strokes(spliced_strokes, fname=new_suffix(fname, ".2_spliced.png"))
                 plot_strokes(
-                    deltas_to_strokes(deltas), fname=new_suffix(fname, ".3_deltas.png")
+                    joined_strokes, fname=new_suffix("png", fname, ".1_joined.png")
+                )
+                plot_strokes(
+                    spliced_strokes, fname=new_suffix("png", fname, ".2_spliced.png")
+                )
+                plot_strokes(
+                    deltas_to_strokes(deltas),
+                    fname=new_suffix("png", fname, ".3_deltas.png"),
                 )
 
-                raw_output_fname = new_suffix(fname, ".raw.svg")
+                raw_output_fname = new_suffix("svg", fname, ".raw.svg")
                 with open(raw_output_fname, "w", encoding="utf-8") as raw_out:
                     raw_dwg = render_strokes(rescaled_strokes, target_size=target_size)
                     raw_dwg.write(raw_out, pretty=True)
                     print(f"\twrote {raw_output_fname}")
 
-                preproc_output_fname = new_suffix(fname, ".preproc.svg")
+                preproc_output_fname = new_suffix("svg", fname, ".preproc.svg")
                 with open(preproc_output_fname, "w", encoding="utf-8") as preproc_out:
                     preproc_dwg = render_deltas(deltas, target_size=target_size)
                     preproc_dwg.save(preproc_output_fname)
                     print(f"\twrote {preproc_output_fname}")
         except Exception as e:
-            print(f"error processing {input_fname}: {e}")
-            raise e
+            print(f"error processing idx={i} input_fname={input_fname}: {e}")
+            # raise e
     return np.array(dataset, dtype=object)

@@ -102,12 +102,12 @@ def merge_closest_strokes(strokes, dist_threshold=10.0):
         sorted_strokes
     )
 
-    print(f"Minimum distance: {min_dist}")
-    print(f"From {min_l_idx}_{min_l_pos} ({len(strokes[min_l_idx])} points)")
-    print(f"To {min_r_idx}_{min_r_pos} ({len(strokes[min_l_idx])} points)")
+    # print(f"Minimum distance: {min_dist}")
+    # print(f"From {min_l_idx}_{min_l_pos} ({len(strokes[min_l_idx])} points)")
+    # print(f"To {min_r_idx}_{min_r_pos} ({len(strokes[min_l_idx])} points)")
 
     if min_dist >= dist_threshold:
-        print("not merging")
+        # print("not merging")
         return min_dist, strokes
 
     return min_dist, join_endpoints(
@@ -118,18 +118,18 @@ def merge_closest_strokes(strokes, dist_threshold=10.0):
 def merge_until(strokes, dist_threshold=10.0):
     curr_strokes = copy.copy(strokes)
     all_iterations = [curr_strokes]
-    for i in range(len(curr_strokes)):
+    for i in range(len(curr_strokes) - 1):
         min_dist, curr_strokes = merge_closest_strokes(
             curr_strokes, dist_threshold=dist_threshold
         )
-        print(f"[{i}] - len(curr_strokes) = {len(curr_strokes)}, min_dist = {min_dist}")
+        # print(f"[{i}] - len(curr_strokes) = {len(curr_strokes)}, min_dist = {min_dist}")
         if min_dist > dist_threshold:
-            print("exceeded dist threshold")
+            # print("exceeded dist threshold")
             break
         all_iterations.append(curr_strokes)
-    print(
-        f"finished merging - len(curr_strokes) = {len(curr_strokes)}, min_dist = {min_dist}"
-    )
+    # print(
+    #     f"finished merging - len(curr_strokes) = {len(curr_strokes)}, min_dist = {min_dist}"
+    # )
     return curr_strokes, all_iterations
 
 # %% ../../nbs/05a_path_joining.ipynb 30
@@ -179,23 +179,23 @@ def join_splice(strokes, l_idx, r_idx, k):
 def splice_until(strokes, dist_threshold=10.0):
     curr_strokes = copy.copy(strokes)
     all_iterations = [curr_strokes]
-    for i in range(len(curr_strokes)):
+    for i in range(len(curr_strokes) - 1):
         min_dist, min_l_idx, min_r_idx, k = closest_splice_pair(curr_strokes)
 
-        print(f"Minimum distance: {min_dist}")
+        # print(f"Minimum distance: {min_dist}")
 
         if min_dist > dist_threshold:
-            print("exceeded dist threshold")
+            # print("exceeded dist threshold")
             break
 
-        print(f"From {min_l_idx} ({len(strokes[min_l_idx])} points)")
-        print(f"To {min_r_idx} ({len(strokes[min_l_idx])} points)")
-        print(f"At index k={k}")
+        # print(f"From {min_l_idx} ({len(strokes[min_l_idx])} points)")
+        # print(f"To {min_r_idx} ({len(strokes[min_l_idx])} points)")
+        # print(f"At index k={k}")
 
         curr_strokes = join_splice(curr_strokes, min_l_idx, min_r_idx, k)
 
         all_iterations.append(curr_strokes)
-    print(
-        f"finished merging - len(curr_strokes) = {len(curr_strokes)}, min_dist = {min_dist}"
-    )
+    # print(
+    #     f"finished merging - len(curr_strokes) = {len(curr_strokes)}, min_dist = {min_dist}"
+    # )
     return curr_strokes, all_iterations
