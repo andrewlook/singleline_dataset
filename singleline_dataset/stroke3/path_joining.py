@@ -3,7 +3,10 @@
 # %% auto 0
 __all__ = ['closest_endpoint_pair', 'join_endpoints', 'merge_closest_strokes']
 
-# %% ../../nbs/05a_path_joining.ipynb 20
+# %% ../../nbs/05a_path_joining.ipynb 11
+import numpy as np
+
+
 def closest_endpoint_pair(strokes):
     sorted_strokes = sorted(strokes, key=lambda s: len(s), reverse=True)
 
