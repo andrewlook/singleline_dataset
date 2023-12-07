@@ -46,8 +46,10 @@ def svgs_to_deltas(
             if not os.path.isdir(d):
                 os.makedirs(d)
 
+    all_files = enumerate_files(input_dir)
+    print(f"found {len(all_files)} in {input_dir}")
     dataset = []
-    for i, fname in enumerate(enumerate_files(input_dir)):
+    for i, fname in enumerate(all_files):
         if limit and i > limit:
             break
         input_fname = os.path.join(input_dir, fname)
