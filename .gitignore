@@ -151,3 +151,4 @@ checklink/cookies.txt
 .quarto
 outputs/
 nbs/*.svg
+outputs_segmented/
