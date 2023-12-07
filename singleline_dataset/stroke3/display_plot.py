@@ -4,12 +4,17 @@
 __all__ = ['plot_strokes', 'parse_svg', 'create_animation', 'show_video']
 
 # %% ../../nbs/01a_display_plot.ipynb 4
+import io
+from PIL import Image
 import matplotlib.pyplot as plt
 
 
-def plot_strokes(strokes, target_size=200, lw=2):
+def plot_strokes(strokes, target_size=200, lw=2, fname=None):
     fig = plt.figure()
-    ax = plt.axes(xlim=(0, target_size + 2 * lw), ylim=(-target_size - 2 * lw, 0))
+    ax = plt.axes(
+        xlim=(0, target_size + 0.1 * target_size),
+        ylim=(-target_size - 0.1 * target_size),
+    )
     ax.set_facecolor("white")
 
     # remove the axis
@@ -17,12 +22,25 @@ def plot_strokes(strokes, target_size=200, lw=2):
     ax.set_xticks([])
     ax.set_yticks([])
 
+    # remove the frame; https://stackoverflow.com/questions/14908576/how-to-remove-frame-from-a-figure
+    fig.patch.set_visible(False)
+    # plt.box(False)
+
     lines = []
     for s in strokes:
         (line,) = ax.plot([], [], lw=lw)
         line.set_data(s[:, 0], -s[:, 1])
         lines.append(line)
-    plt.show()
+    if not fname:
+        plt.show()
+        return
+    with io.BytesIO() as buf:
+        plt.savefig(buf, format="png")
+        plt.close()
+        img = Image.open(buf)
+        img.save(fname)
+        buf.seek(0)
+        buf.truncate()
 
 # %% ../../nbs/01a_display_plot.ipynb 5
 from lxml import etree
@@ -57,6 +75,8 @@ def create_animation(
     ax.grid = False
     ax.set_xticks([])
     ax.set_yticks([])
+    # remove the frame
+    fig.patch.set_visible(False)
 
     # initialization function: plot the background of each frame
     def init():
