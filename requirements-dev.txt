@@ -5,3 +5,4 @@ nbdev
 black
 isort
 twine
+pre-commit
