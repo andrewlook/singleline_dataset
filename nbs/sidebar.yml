@@ -3,8 +3,8 @@ website:
     contents:
       - index.ipynb
       - 00_svg_files.ipynb
-      - 01_display_svg.ipynb
-      - 01a_display_plot.ipynb
+      - 01_default.ipynb
+      - 01a_default.ipynb
       - 02_transforms.ipynb
       - 03_svg_transforms.ipynb
       - 04_path_helpers.ipynb

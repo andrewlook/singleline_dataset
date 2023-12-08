@@ -14,7 +14,7 @@ def stroke_rdp_deltas(rescaled_strokes, epsilon=2.0):
 
     ## roundtrip / sanity check
     # _rdp_result = stroke3.deltas_to_strokes(deltas)
-    # display_plot.plot_strokes(_rdp_result)
+    # default.plot_strokes(_rdp_result)
 
     return deltas
 
@@ -23,8 +23,8 @@ import os
 
 import numpy as np
 
-from singeline_dataset.display_plot import *
-from singeline_dataset.display_svg import render_deltas, render_strokes
+from singeline_dataset.default import *
+from singeline_dataset.default import render_deltas, render_strokes
 from singeline_dataset.path_joining import merge_until, splice_until
 from singeline_dataset.stroke3 import *
 from singeline_dataset.svg_files import enumerate_files

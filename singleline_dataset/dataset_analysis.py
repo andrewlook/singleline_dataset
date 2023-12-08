@@ -8,8 +8,8 @@ import os
 
 import numpy as np
 
-from singeline_dataset.display_plot import *
-from singeline_dataset.display_svg import *
+from singeline_dataset.default import *
+from singeline_dataset.default import *
 from singeline_dataset.path_joining import *
 from singeline_dataset.path_transforms import *
 from singeline_dataset.stroke3 import *
