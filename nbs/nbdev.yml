@@ -2,8 +2,8 @@ project:
   output-dir: _docs
 
 website:
-  title: "singleline-dataset"
-  site-url: "https://singleline-dataset.andrewlook.com/"
+  title: "singleline_stroke3"
+  site-url: "https://singleline_stroke3.andrewlook.com/"
   description: "Processing Single Line Drawing Data to Train SketchRNN"
   repo-branch: main
-  repo-url: "https://github.com/andrewlook/singleline_dataset"
+  repo-url: "https://github.com/andrewlook/singleline_stroke3"
