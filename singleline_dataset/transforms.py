@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['apply_transform', 'identity_xform', 'scale_xform', 'translate_xform', 'rotate_xform', 'BoundingBox', 'bb_rank2',
            'bb_rank3', 'strokes_to_points', 'points_to_deltas', 'strokes_to_deltas', 'deltas_to_points',
-           'points_to_strokes', 'deltas_to_strokes', 'rdp_strokes']
+           'points_to_strokes', 'deltas_to_strokes', 'rdp_strokes', 'stroke_rdp_deltas']
 
 # %% ../nbs/02_transforms.ipynb 4
 from dataclasses import dataclass
@@ -138,3 +138,14 @@ from rdp import rdp
 
 def rdp_strokes(strokes, epsilon=1.0):
     return [rdp(s, epsilon=epsilon) for s in strokes]
+
+# %% ../nbs/02_transforms.ipynb 20
+def stroke_rdp_deltas(rescaled_strokes, epsilon=2.0):
+    rdp_result = rdp_strokes(rescaled_strokes, epsilon)
+    deltas = strokes_to_deltas(rdp_result)
+
+    ## roundtrip / sanity check
+    # _rdp_result = stroke3.deltas_to_strokes(deltas)
+    # default.plot_strokes(_rdp_result)
+
+    return deltas

@@ -5,13 +5,13 @@ __all__ = ['START', 'END', 'join_2_strokes', 'select_2_strokes', 'join_endpoints
            'merge_closest_strokes', 'merge_until', 'closest_splice_pair', 'splice_2_strokes', 'join_splice',
            'splice_until']
 
-# %% ../nbs/03_strokes.ipynb 2
+# %% ../nbs/03_strokes.ipynb 3
 import copy
 
 import numpy as np
 
-from singeline_dataset.svg import *
-from singeline_dataset.transforms import *
+from .svg import *
+from .transforms import *
 
 # %% ../nbs/03_strokes.ipynb 16
 START = 0
@@ -138,7 +138,7 @@ def merge_until(strokes, dist_threshold=10.0):
 # %% ../nbs/03_strokes.ipynb 24
 # | export
 
-# %% ../nbs/03_strokes.ipynb 30
+# %% ../nbs/03_strokes.ipynb 31
 def closest_splice_pair(strokes):
     min_dist = 1e10
     l_idx = None
@@ -169,7 +169,7 @@ def closest_splice_pair(strokes):
 
     return min_dist, l_idx, r_idx, r_sub
 
-# %% ../nbs/03_strokes.ipynb 31
+# %% ../nbs/03_strokes.ipynb 32
 def splice_2_strokes(lhs, rhs, k):
     return np.concatenate([rhs[:k], lhs, rhs[k:]], axis=0)
 

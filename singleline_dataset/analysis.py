@@ -8,8 +8,8 @@ import os
 
 import numpy as np
 
-from singeline_dataset.svg import *
-from singeline_dataset.display import *
-from singeline_dataset.transforms import *
-from singeline_dataset.strokes import *
-from singeline_dataset.dataset import *
+from .dataset import *
+from .display import *
+from .strokes import *
+from .svg import *
+from .transforms import *
