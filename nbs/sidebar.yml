@@ -2,7 +2,7 @@ website:
   sidebar:
     contents:
       - index.ipynb
-      - 00_svg_files.ipynb
+      - 00_svg.ipynb
       - 01_default.ipynb
       - 01a_default.ipynb
       - 02_transforms.ipynb

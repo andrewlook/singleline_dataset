@@ -13,4 +13,4 @@ from singeline_dataset.default import *
 from singeline_dataset.path_joining import *
 from singeline_dataset.path_transforms import *
 from singeline_dataset.stroke3 import *
-from singeline_dataset.svg_files import *
+from singeline_dataset.svg import *

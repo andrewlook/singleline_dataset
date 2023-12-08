@@ -18,7 +18,7 @@ def stroke_rdp_deltas(rescaled_strokes, epsilon=2.0):
 
     return deltas
 
-# %% ../nbs/07_svg_dataset.ipynb 7
+# %% ../nbs/07_svg_dataset.ipynb 8
 import os
 
 import numpy as np
@@ -27,7 +27,7 @@ from singeline_dataset.default import *
 from singeline_dataset.default import render_deltas, render_strokes
 from singeline_dataset.path_joining import merge_until, splice_until
 from singeline_dataset.stroke3 import *
-from singeline_dataset.svg_files import enumerate_files
+from singeline_dataset.svg import enumerate_files
 
 
 def svgs_to_deltas(
