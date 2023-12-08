@@ -4,3 +4,4 @@ jupyterlab-vim
 nbdev
 black
 isort
+twine
