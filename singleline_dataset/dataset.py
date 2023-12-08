@@ -22,7 +22,6 @@ def stroke_rdp_deltas(rescaled_strokes, epsilon=2.0):
 import os
 
 import numpy as np
-
 from singeline_dataset.default import *
 from singeline_dataset.default import render_deltas, render_strokes
 from singeline_dataset.path_joining import merge_until, splice_until

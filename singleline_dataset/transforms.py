@@ -6,8 +6,9 @@ __all__ = ['apply_transform', 'identity_xform', 'scale_xform', 'translate_xform'
            'points_to_strokes', 'deltas_to_strokes', 'rdp_strokes']
 
 # %% ../nbs/02_transforms.ipynb 4
-import numpy as np
 from dataclasses import dataclass
+
+import numpy as np
 
 # %% ../nbs/02_transforms.ipynb 6
 def apply_transform(coords_2d, xform):

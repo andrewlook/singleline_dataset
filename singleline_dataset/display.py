@@ -4,17 +4,16 @@
 __all__ = ['plot_strokes', 'create_animation', 'show_video', 'randcolor', 'render_strokes', 'render_deltas']
 
 # %% ../nbs/01_display.ipynb 3
-import random
-import svgwrite
-import io
-from PIL import Image
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib import animation
 import base64
 import io
+import random
 
+import matplotlib.pyplot as plt
+import numpy as np
+import svgwrite
 from IPython.display import HTML, display
+from matplotlib import animation
+from PIL import Image
 
 # %% ../nbs/01_display.ipynb 6
 def plot_strokes(strokes, target_size=200, lw=2, fname=None):

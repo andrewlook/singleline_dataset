@@ -6,8 +6,8 @@ __all__ = ['discretize_svg', 'to_points', 'discretize_path', 'discretize_paths',
 
 # %% ../nbs/00_svg.ipynb 3
 import numpy as np
-from lxml import etree
 import svgpathtools
+from lxml import etree
 
 from singeline_dataset.transforms import *
 
