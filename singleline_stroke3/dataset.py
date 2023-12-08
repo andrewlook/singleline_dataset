@@ -114,7 +114,7 @@ def stroke_summary_df(dataset):
             "num_points": len(deltas),
             "num_strokes": len(deltas_to_strokes(deltas)),
         }
-        for i, deltas in enumerate(full_dataset)
+        for i, deltas in enumerate(dataset)
     ]
     # by_num_strokes = sorted(summary, key=lambda k: k["num_strokes"], reverse=True)
     df = pd.DataFrame(summary)
