@@ -2,12 +2,14 @@
 
 # %% auto 0
 __all__ = ['apply_transform', 'identity_xform', 'scale_xform', 'translate_xform', 'rotate_xform', 'BoundingBox', 'bb_rank2',
-           'bb_rank3']
+           'bb_rank3', 'strokes_to_points', 'points_to_deltas', 'strokes_to_deltas', 'deltas_to_points',
+           'points_to_strokes', 'deltas_to_strokes', 'rdp_strokes']
 
-# %% ../nbs/02_transforms.ipynb 5
+# %% ../nbs/02_transforms.ipynb 4
 import numpy as np
+from dataclasses import dataclass
 
-
+# %% ../nbs/02_transforms.ipynb 6
 def apply_transform(coords_2d, xform):
     assert coords_2d.shape[1] == 2
     assert xform.shape[0] == 3
@@ -19,19 +21,19 @@ def apply_transform(coords_2d, xform):
 
     return xform.dot(coords_full.transpose()).transpose()
 
-# %% ../nbs/02_transforms.ipynb 6
+# %% ../nbs/02_transforms.ipynb 7
 def identity_xform():
     return np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 
-# %% ../nbs/02_transforms.ipynb 7
+# %% ../nbs/02_transforms.ipynb 8
 def scale_xform(scale_x, scale_y):
     return np.array([[scale_x, 0, 0], [0, scale_y, 0], [0, 0, 1]])
 
-# %% ../nbs/02_transforms.ipynb 8
+# %% ../nbs/02_transforms.ipynb 9
 def translate_xform(translate_x, translate_y):
     return np.array([[1, 0, translate_x], [0, 1, translate_y], [0, 0, 1]])
 
-# %% ../nbs/02_transforms.ipynb 9
+# %% ../nbs/02_transforms.ipynb 10
 def rotate_xform(rotate_angle):
     if rotate_angle % 360 == 0:
         return identity_xform()
@@ -40,10 +42,7 @@ def rotate_xform(rotate_angle):
     sin_theta = np.sin(theta)
     return np.array([[cos_theta, -sin_theta, 0], [sin_theta, cos_theta, 0], [0, 0, 1]])
 
-# %% ../nbs/02_transforms.ipynb 10
-from dataclasses import dataclass
-
-
+# %% ../nbs/02_transforms.ipynb 12
 @dataclass
 class BoundingBox:
     xmin: float
@@ -59,7 +58,7 @@ class BoundingBox:
             translate_xform(-self.xmin, -self.ymin)
         )
 
-# %% ../nbs/02_transforms.ipynb 11
+# %% ../nbs/02_transforms.ipynb 13
 def bb_rank2(coords):
     xmin = coords[:, 0].min()
     xmax = coords[:, 0].max()
@@ -75,7 +74,7 @@ def bb_rank2(coords):
         xmin=xmin, xmax=xmax, xrange=xrange, ymin=ymin, ymax=ymax, yrange=yrange
     )
 
-# %% ../nbs/02_transforms.ipynb 12
+# %% ../nbs/02_transforms.ipynb 14
 def bb_rank3(coords):
     xmin = coords[:, :, 0].min()
     xmax = coords[:, :, 0].max()
@@ -90,3 +89,51 @@ def bb_rank3(coords):
     return BoundingBox(
         xmin=xmin, xmax=xmax, xrange=xrange, ymin=ymin, ymax=ymax, yrange=yrange
     )
+
+# %% ../nbs/02_transforms.ipynb 16
+def strokes_to_points(strokes):
+    all = []
+    for s in strokes:
+        eoc_col = np.zeros((s.shape[0], 1))
+        eoc_col[-1, 0] = 1
+        all.append(np.concatenate([s[:, :2], eoc_col], axis=1))
+    return np.vstack(all)
+
+
+def points_to_deltas(points):
+    p2 = points.copy()
+    # first row should stay the same
+    # cols 0,1 of every row onwards should be a delta from the previous row.
+    p2[1:, :2] = points[1:, :2] - points[:-1, :2]
+    return p2
+
+
+def strokes_to_deltas(strokes):
+    points = strokes_to_points(strokes)
+    return points_to_deltas(points)
+
+# %% ../nbs/02_transforms.ipynb 17
+def deltas_to_points(_seq):
+    seq = np.zeros_like(_seq)
+    seq[:, 0:2] = np.cumsum(_seq[:, 0:2], axis=0)
+    seq[:, 2] = _seq[:, 2]
+    return seq
+
+
+def points_to_strokes(_seq):
+    strokes = np.split(_seq, np.where(_seq[:, 2] > 0)[0] + 1)
+    return [
+        s for s in strokes if len(s) > 0
+    ]  # split sometimes returns an empty array at the end
+
+
+def deltas_to_strokes(_seq):
+    points = deltas_to_points(_seq)
+    return points_to_strokes(points)
+
+# %% ../nbs/02_transforms.ipynb 19
+from rdp import rdp
+
+
+def rdp_strokes(strokes, epsilon=1.0):
+    return [rdp(s, epsilon=epsilon) for s in strokes]
