@@ -1,6 +1,7 @@
 jupyterlab
 jupyterlab-quarto
 jupyterlab-vim
+jupyterlab-code-formatter
 nbdev
 black
 isort

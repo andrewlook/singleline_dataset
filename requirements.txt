@@ -5,3 +5,5 @@ rdp
 numpy
 matplotlib
 pandas
+pyautotrace
+Pillow
