@@ -60,12 +60,10 @@ class BoundingBox:
             xmin = coords[:, 0].min()
             xmax = coords[:, 0].max()
             xrange = xmax - xmin
-            # print(f"xrange, xmin, xmax = {xrange, xmin, xmax}")
 
             ymin = coords[:, 1].min()
             ymax = coords[:, 1].max()
             yrange = ymax - ymin
-            # print(f"yrange, ymin, ymax = {yrange, ymin, ymax}")
 
             return BoundingBox(
                 xmin=xmin, xmax=xmax, xrange=xrange, ymin=ymin, ymax=ymax, yrange=yrange
@@ -75,13 +73,31 @@ class BoundingBox:
                 f"invalid coordinates passed - expected rank-2 matrix but got rank-{len(coords.shape)}"
             )
 
+    def iou(self, other):
+        bb1 = self
+        bb2 = other
+        x_left = max(bb1.xmin, bb2.xmin)
+        y_top = max(bb1.ymin, bb2.ymin)
+        x_right = min(bb1.xmax, bb2.xmax)
+        y_bottom = min(bb1.ymax, bb2.ymax)
+        intersection_area = (x_right - x_left) * (y_bottom - y_top)
+        # print(intersection_area)
+
+        bb1_area = bb1.xrange * bb1.yrange
+        bb2_area = bb2.xrange * bb2.yrange
+        # print(bb1_area, bb2_area)
+
+        iou = intersection_area / float(bb1_area + bb2_area - intersection_area)
+        # print(iou)
+        return iou
+
     def normalization_xform(self, scale=1.0):
         max_range = self.xrange if self.xrange > self.yrange else self.yrange
         return scale_xform(scale / max_range, scale / max_range).dot(
             translate_xform(-self.xmin, -self.ymin)
         )
 
-# %% ../nbs/02_transforms.ipynb 16
+# %% ../nbs/02_transforms.ipynb 14
 def strokes_to_points(strokes):
     all = []
     for s in strokes:
@@ -103,7 +119,7 @@ def strokes_to_deltas(strokes):
     points = strokes_to_points(strokes)
     return points_to_deltas(points)
 
-# %% ../nbs/02_transforms.ipynb 17
+# %% ../nbs/02_transforms.ipynb 15
 def deltas_to_points(_seq):
     seq = np.zeros_like(_seq)
     seq[:, 0:2] = np.cumsum(_seq[:, 0:2], axis=0)
@@ -122,14 +138,14 @@ def deltas_to_strokes(_seq):
     points = deltas_to_points(_seq)
     return points_to_strokes(points)
 
-# %% ../nbs/02_transforms.ipynb 19
+# %% ../nbs/02_transforms.ipynb 17
 from rdp import rdp
 
 
 def rdp_strokes(strokes, epsilon=1.0):
     return [rdp(s, epsilon=epsilon) for s in strokes]
 
-# %% ../nbs/02_transforms.ipynb 20
+# %% ../nbs/02_transforms.ipynb 18
 def stroke_rdp_deltas(rescaled_strokes, epsilon=2.0):
     rdp_result = rdp_strokes(rescaled_strokes, epsilon)
     deltas = strokes_to_deltas(rdp_result)
