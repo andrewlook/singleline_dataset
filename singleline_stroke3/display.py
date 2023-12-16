@@ -9,14 +9,16 @@ import io
 import random
 
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import numpy as np
 import svgwrite
 from IPython.display import HTML, display
 from matplotlib import animation
 from PIL import Image
+from .transforms import BoundingBox
 
 # %% ../nbs/01_display.ipynb 6
-def plot_strokes(strokes, target_size=200, lw=2, fname=None):
+def plot_strokes(strokes, target_size=200, lw=2, bounding_boxes=False, fname=None):
     fig = plt.figure()
     ax = plt.axes(
         xlim=(0, target_size + 0.1 * target_size),
@@ -38,6 +40,18 @@ def plot_strokes(strokes, target_size=200, lw=2, fname=None):
         (line,) = ax.plot([], [], lw=lw)
         line.set_data(s[:, 0], -s[:, 1])
         lines.append(line)
+        if bounding_boxes:
+            bb = BoundingBox.create(s)
+            rect = patches.Rectangle(
+                (bb.xmin, -bb.ymin),
+                bb.xrange,
+                -bb.yrange,
+                linewidth=1,
+                edgecolor="g",
+                facecolor="none",
+            )
+            ax.add_patch(rect)
+
     if not fname:
         plt.show()
         return

@@ -73,13 +73,21 @@ class BoundingBox:
                 f"invalid coordinates passed - expected rank-2 matrix but got rank-{len(coords.shape)}"
             )
 
-    def iou(self, other):
+    def intersection(self, other):
         bb1 = self
         bb2 = other
         x_left = max(bb1.xmin, bb2.xmin)
         y_top = max(bb1.ymin, bb2.ymin)
         x_right = min(bb1.xmax, bb2.xmax)
         y_bottom = min(bb1.ymax, bb2.ymax)
+        return x_left, y_top, x_right, y_bottom
+
+    def iou(self, other):
+        bb1 = self
+        bb2 = other
+
+        x_left, y_top, x_right, y_bottom = self.intersection(other)
+
         intersection_area = (x_right - x_left) * (y_bottom - y_top)
         # print(intersection_area)
 
