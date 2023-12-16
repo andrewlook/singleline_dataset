@@ -77,7 +77,7 @@ def rescale_strokes(all_strokes, target_size):
     # we do want a global max/min coord so that we can rescale all points within the same space.
     vstack_coords = np.vstack(all_strokes)
     # print(f"vstack_coords.shape={vstack_coords.shape}")
-    vstack_bounding_box = bb_rank2(vstack_coords)
+    vstack_bounding_box = BoundingBox.create(vstack_coords)
     vstack_rescale_transform = vstack_bounding_box.normalization_xform(target_size)
 
     all_rescaled_strokes = [
