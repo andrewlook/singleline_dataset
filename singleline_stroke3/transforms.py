@@ -62,6 +62,9 @@ class BoundingBox:
         self.xrange = xmax - xmin
         self.yrange = ymax - ymin
 
+    def __repr__(self):
+        return f"BBox(({self.xmin}, {self.ymin}), ({self.xmax}, {self.ymax})) (width {self.xrange} x height {self.yrange})"
+
     @staticmethod
     def create(coords: np.ndarray):
         # rank-2
@@ -93,10 +96,10 @@ class BoundingBox:
         bb1 = self
         bb2 = other
 
-        assert bb1.xmin < bb1.xmax
-        assert bb1.ymin < bb1.ymax
-        assert bb2.xmin < bb2.xmax
-        assert bb2.ymin < bb2.ymax
+        assert bb1.xmin <= bb1.xmax
+        assert bb1.ymin <= bb1.ymax
+        assert bb2.xmin <= bb2.xmax
+        assert bb2.ymin <= bb2.ymax
 
         x_left = max(bb1.xmin, bb2.xmin)
         y_top = max(bb1.ymin, bb2.ymin)
