@@ -7,3 +7,5 @@ matplotlib
 pandas
 pyautotrace
 Pillow
+fastai
+fastcore

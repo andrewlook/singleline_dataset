@@ -18,7 +18,9 @@ from PIL import Image
 from .transforms import BoundingBox
 
 # %% ../nbs/01_display.ipynb 6
-def plot_strokes(strokes, target_size=200, lw=2, bounding_boxes=False, fname=None):
+def plot_strokes(
+    strokes, target_size=200, lw=2, bounding_boxes=False, transparent=False, fname=None
+):
     fig = plt.figure()
     ax = plt.axes(
         xlim=(0, target_size + 0.1 * target_size),
@@ -39,6 +41,8 @@ def plot_strokes(strokes, target_size=200, lw=2, bounding_boxes=False, fname=Non
     for s in strokes:
         (line,) = ax.plot([], [], lw=lw)
         line.set_data(s[:, 0], -s[:, 1])
+        if transparent:
+            line.set_color("black")
         lines.append(line)
         if bounding_boxes:
             bb = BoundingBox.create(s)
@@ -56,7 +60,7 @@ def plot_strokes(strokes, target_size=200, lw=2, bounding_boxes=False, fname=Non
         plt.show()
         return
     with io.BytesIO() as buf:
-        plt.savefig(buf, format="png")
+        plt.savefig(buf, format="png", transparent=transparent)
         plt.close()
         img = Image.open(buf)
         img.save(fname)
