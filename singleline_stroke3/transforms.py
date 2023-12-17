@@ -53,8 +53,8 @@ class BoundingBox:
     yrange: float
 
     def __init__(self, xmin, xmax, ymin, ymax):
-        assert xmin < xmax
-        assert ymin < ymax
+        assert xmin <= xmax
+        assert ymin <= ymax
         self.xmin = xmin
         self.xmax = xmax
         self.ymin = ymin
@@ -77,6 +77,14 @@ class BoundingBox:
             raise Exception(
                 f"invalid coordinates passed - expected rank-2 matrix but got rank-{len(coords.shape)}"
             )
+
+    def merge(self, other):
+        return BoundingBox(
+            xmin=min(self.xmin, other.xmin),
+            xmax=max(self.xmax, other.xmax),
+            ymin=min(self.ymin, other.ymin),
+            ymax=max(self.ymax, other.ymax),
+        )
 
     def area(self):
         return self.xrange * self.yrange
