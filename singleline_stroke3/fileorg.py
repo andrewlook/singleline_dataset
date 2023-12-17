@@ -24,7 +24,7 @@ def _path_from_env(variable, default):
         print(f"found env var {variable}, using: {value}")
         return Path(value)
     print(f"no env var {variable}, defaulting to: {value}")
-    return default
+    return Path(default)
 
 
 def singleline_data_home(default=DEFAULT_HOME_DIR):

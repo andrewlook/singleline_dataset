@@ -8,6 +8,7 @@ import os
 
 import numpy as np
 
+from .fileorg import *
 from .dataset import *
 from .display import *
 from .strokes import *
