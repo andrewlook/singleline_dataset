@@ -98,24 +98,16 @@ class BoundingBox:
         if x_right < x_left or y_bottom < y_top:
             return None
 
-        return BoundingBox(
-            xmin=x_left,
-            ymin=y_top,
-            xmax=x_right,
-            ymax=y_bottom,
-            xrange=x_right - x_left,
-            yrange=y_bottom - y_top,
-        )
+        return BoundingBox(xmin=x_left, ymin=y_top, xmax=x_right, ymax=y_bottom)
 
     def iou(self, other):
         """
         Intersection over union - area of the overlap relative to combined area of the bounding boxes
         """
         overlap = self.intersection(other)
-        if overlap:
-            return overlap.area() / float(self.area() + other.area() - overlap.area())
-        else:
-            return None
+        if not overlap:
+            return 0.0
+        return overlap.area() / float(self.area() + other.area() - overlap.area())
 
     def normalization_xform(self, scale=1.0):
         """
