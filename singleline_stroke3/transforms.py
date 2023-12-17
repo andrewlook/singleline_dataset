@@ -44,14 +44,23 @@ def rotate_xform(rotate_angle):
     return np.array([[cos_theta, -sin_theta, 0], [sin_theta, cos_theta, 0], [0, 0, 1]])
 
 # %% ../nbs/02_transforms.ipynb 12
-@dataclass
 class BoundingBox:
     xmin: float
     xmax: float
-    xrange: float
     ymin: float
     ymax: float
+    xrange: float
     yrange: float
+
+    def __init__(self, xmin, xmax, ymin, ymax):
+        assert xmin < xmax
+        assert ymin < ymax
+        self.xmin = xmin
+        self.xmax = xmax
+        self.ymin = ymin
+        self.ymax = ymax
+        self.xrange = xmax - xmin
+        self.yrange = ymax - ymin
 
     @staticmethod
     def create(coords: np.ndarray):
@@ -59,47 +68,60 @@ class BoundingBox:
         if len(coords.shape) == 2:
             xmin = coords[:, 0].min()
             xmax = coords[:, 0].max()
-            xrange = xmax - xmin
 
             ymin = coords[:, 1].min()
             ymax = coords[:, 1].max()
-            yrange = ymax - ymin
 
-            return BoundingBox(
-                xmin=xmin, xmax=xmax, xrange=xrange, ymin=ymin, ymax=ymax, yrange=yrange
-            )
+            return BoundingBox(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax)
         else:
             raise Exception(
                 f"invalid coordinates passed - expected rank-2 matrix but got rank-{len(coords.shape)}"
             )
 
+    def area(self):
+        return self.xrange * self.yrange
+
     def intersection(self, other):
         bb1 = self
         bb2 = other
+
+        assert bb1.xmin < bb1.xmax
+        assert bb1.ymin < bb1.ymax
+        assert bb2.xmin < bb2.xmax
+        assert bb2.ymin < bb2.ymax
+
         x_left = max(bb1.xmin, bb2.xmin)
         y_top = max(bb1.ymin, bb2.ymin)
         x_right = min(bb1.xmax, bb2.xmax)
         y_bottom = min(bb1.ymax, bb2.ymax)
-        return x_left, y_top, x_right, y_bottom
+
+        if x_right < x_left or y_bottom < y_top:
+            return None
+
+        return BoundingBox(
+            xmin=x_left,
+            ymin=y_top,
+            xmax=x_right,
+            ymax=y_bottom,
+            xrange=x_right - x_left,
+            yrange=y_bottom - y_top,
+        )
 
     def iou(self, other):
-        bb1 = self
-        bb2 = other
-
-        x_left, y_top, x_right, y_bottom = self.intersection(other)
-
-        intersection_area = (x_right - x_left) * (y_bottom - y_top)
-        # print(intersection_area)
-
-        bb1_area = bb1.xrange * bb1.yrange
-        bb2_area = bb2.xrange * bb2.yrange
-        # print(bb1_area, bb2_area)
-
-        iou = intersection_area / float(bb1_area + bb2_area - intersection_area)
-        # print(iou)
-        return iou
+        """
+        Intersection over union - area of the overlap relative to combined area of the bounding boxes
+        """
+        overlap = self.intersection(other)
+        if overlap:
+            return overlap.area() / float(self.area() + other.area() - overlap.area())
+        else:
+            return None
 
     def normalization_xform(self, scale=1.0):
+        """
+        Produce a normalization transform - a set of transformations,
+        given the input coordinates, to convert all coords into the range (0,1)
+        """
         max_range = self.xrange if self.xrange > self.yrange else self.yrange
         return scale_xform(scale / max_range, scale / max_range).dot(
             translate_xform(-self.xmin, -self.ymin)
