@@ -8,9 +8,10 @@ import os
 from pprint import pprint
 
 import numpy as np
-from .fileorg import *
+
 from .dataset import *
 from .display import *
+from .fileorg import *
 from .strokes import *
 from .svg import *
 from .transforms import *
