@@ -19,23 +19,26 @@ from .transforms import BoundingBox
 
 # %% ../nbs/01_display.ipynb 6
 def plot_strokes(
-    strokes, target_size=200, lw=2, bounding_boxes=False, transparent=False, fname=None
+    strokes,
+    target_size=200,
+    lw=2,
+    bounding_boxes=False,
+    transparent=False,
+    frameon=False,
+    fname=None,
 ):
-    fig = plt.figure()
+    fig = plt.figure(frameon=frameon)
+    # remove the frame; https://stackoverflow.com/questions/14908576/how-to-remove-frame-from-a-figure
+    fig.patch.set_visible(False)
     ax = plt.axes(
         xlim=(0, target_size + 0.1 * target_size),
         ylim=(-target_size - 0.1 * target_size),
     )
     ax.set_facecolor("white")
-
     # remove the axis
     ax.grid = False
     ax.set_xticks([])
     ax.set_yticks([])
-
-    # remove the frame; https://stackoverflow.com/questions/14908576/how-to-remove-frame-from-a-figure
-    fig.patch.set_visible(False)
-    # plt.box(False)
 
     lines = []
     for s in strokes:
