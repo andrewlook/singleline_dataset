@@ -3,7 +3,7 @@ project:
 
 website:
   title: "singleline_stroke3"
-  site-url: "https://singleline_stroke3.andrewlook.com/"
+  site-url: "https://singleline-stroke3.andrewlook.com/"
   description: "Processing Single Line Drawing Data to Train SketchRNN"
   repo-branch: main
   repo-url: "https://github.com/andrewlook/singleline_stroke3"

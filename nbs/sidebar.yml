@@ -2,13 +2,11 @@ website:
   sidebar:
     contents:
       - index.ipynb
+      - 00_fileorg.ipynb
       - 00_svg.ipynb
-      - 01_default.ipynb
-      - 01a_default.ipynb
+      - 01_display.ipynb
       - 02_transforms.ipynb
-      - 03_svg_transforms.ipynb
-      - 04_path_helpers.ipynb
-      - 05_path_transforms.ipynb
-      - 05a_path_joining.ipynb
-      - 06_stroke3.ipynb
-      - 07_svg_dataset.ipynb
+      - 03_strokes.ipynb
+      - 04_dataset.ipynb
+      - 06_bounding_boxes.ipynb
+      - 10_analysis.ipynb
