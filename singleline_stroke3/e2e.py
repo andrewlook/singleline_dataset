@@ -9,8 +9,8 @@ import math
 import pandas as pd
 from fastai.vision.all import *
 
-from portfolio_search.embeddings import *
-from portfolio_search.fileorg import *
+from .embeddings import *
+from .fileorg import *
 
 # %% ../nbs/02_clustering.ipynb 16
 def sketchbook_resnet34(sketchbooks_dir, load_checkpoint=None):

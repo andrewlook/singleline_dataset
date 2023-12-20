@@ -10,7 +10,7 @@ import math
 import pandas as pd
 from fastai.vision.all import *
 
-from portfolio_search.fileorg import *
+from .fileorg import *
 
 # %% ../nbs/01_embeddings.ipynb 6
 DEFAULT_BATCH_SIZE = 64
