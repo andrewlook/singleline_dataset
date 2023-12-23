@@ -88,38 +88,39 @@ class Hook:
         self.hook.remove()
 
 # %% ../nbs/01_embeddings.ipynb 29
-def embed_dir(input_dir, learner):
+def embed_dir(input_dir, learner, strip_dir=None):
     batched_fnames, ordered_dls = batch_fnames_and_images(input_dir)
-    with learner.no_logging():
-        with torch.no_grad():
-            for i, batch in enumerate(zip(batched_fnames, ordered_dls.train)):
-                batched_fnames, (x, y) = batch
-                bs = len(batched_fnames)
-                assert bs == x.shape[0]
-                assert bs == y.shape[0]
+    with torch.no_grad(), learner.no_logging():
+        for i, batch in enumerate(zip(batched_fnames, ordered_dls.train)):
+            batched_fnames, (x, y) = batch
+            bs = len(batched_fnames)
+            assert bs == x.shape[0]
+            assert bs == y.shape[0]
 
-                activations = predict_embeddings(learner.model, x)
-                assert bs == activations.shape[0]
+            activations = predict_embeddings(learner.model, x)
+            assert bs == activations.shape[0]
 
-                for j in range(bs):
-                    x_j = x[j]
-                    y_j = y[j]
-                    fname_j = batched_fnames[j]
-                    emb_j = activations[j]
-                    # label: what parent dir exists in the dataset we're processing
-                    label_j = ordered_dls.vocab[y_j]
-                    # pred_label: prediction made relative to the vocab of the learner's model
-                    # (may be different than what's in the dataloader we're using for input).
-                    pred_label_j, pred_idx_j, pred_probs_j = learner.predict(x_j.cpu())
-                    yield {
-                        "idx": j + i * bs,
-                        "abs_fname": fname_j,
-                        "rel_fname": str(fname_j).replace(str(input_dir) + "/", ""),
-                        "label": label_j,
-                        "pred_label": pred_label_j,
-                        "pred_idx": pred_idx_j.cpu().numpy(),
-                        "pred_probs": ",".join(
-                            [f"{p:04f}" for p in pred_probs_j.cpu().numpy()]
-                        ),
-                        "emb_csv": ",".join([str(f) for f in list(emb_j)]),
-                    }
+            for j in range(bs):
+                y_j = y[j]
+                fname_j = batched_fnames[j]
+                if strip_dir:
+                    fname_j = str(fname_j).replace(f"{strip_dir}/", "")
+                emb_j = activations[j]
+                # label: what parent dir exists in the dataset we're processing
+                label_j = ordered_dls.vocab[y_j]
+                # # pred_label: prediction made relative to the vocab of the learner's model
+                # # (may be different than what's in the dataloader we're using for input).
+                # x_j = x[j]
+                # pred_label_j, pred_idx_j, pred_probs_j = learner.predict(x_j.cpu())
+                yield {
+                    "idx": j + i * bs,
+                    "indiv_fname": os.path.basename(fname_j),
+                    "orig_fname": fname_j,
+                    "label": label_j,
+                    # "pred_label": pred_label_j,
+                    # "pred_idx": pred_idx_j.cpu().numpy(),
+                    # "pred_probs": ",".join(
+                    #     [f"{p:04f}" for p in pred_probs_j.cpu().numpy()]
+                    # ),
+                    "emb_csv": ",".join([str(f) for f in list(emb_j)]),
+                }
