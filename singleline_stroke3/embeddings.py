@@ -123,6 +123,9 @@ def embed_dir(input_dir, learner, strip_dir=None):
     so the data can be stored for downstream processes that need embeddings
     mapped to specific files (ex. clustering/visual search and taking some
     action like moving files based on the results).
+
+    TODO: remove the 'data_home' literal part of `orig_fname`,
+          so the TSV's can be dir-independent (relative to their data_root)
     """
     batched_fnames, ordered_dls = batch_fnames_and_images(input_dir)
     with torch.no_grad(), learner.no_logging():
