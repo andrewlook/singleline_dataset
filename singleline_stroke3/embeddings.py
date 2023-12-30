@@ -2,8 +2,9 @@
 
 # %% auto 0
 __all__ = ['DEFAULT_DATA_HOME', 'PRETRAINED_MODEL_PATH', 'PRETRAINED_CHECKPOINT', 'DEFAULT_BATCH_SIZE', 'load_resnet',
-           'sketchbook_dataloaders', 'batch_fnames_and_images', 'predict_embeddings', 'Hook', 'embed_dir',
-           'pd_series_to_embs', 'train_kmeans', 'cluster_assigner', 'show_cluster', 'show_all_clusters']
+           'SketchbookEpoch', 'sketchbook_dataloaders', 'batch_fnames_and_images', 'predict_embeddings', 'Hook',
+           'embed_dir', 'pd_series_to_embs', 'train_kmeans', 'cluster_assigner', 'show_cluster', 'show_all_clusters',
+           'categorize_files']
 
 # %% ../nbs/01_embeddings.ipynb 4
 import math
@@ -49,6 +50,32 @@ def load_resnet(
     return learn
 
 # %% ../nbs/01_embeddings.ipynb 15
+class SketchbookEpoch:
+    def __init__(self, epoch, data_home="../data_home"):
+        self.data_home = singleline_data_home(default=data_home)
+        self.epoch = epoch
+        self.raster_epoch = self.data_home / f"raster/epoch-{epoch}"
+        self.stroke3_epoch = self.data_home / f"stroke3/epoch-{epoch}"
+
+    def dir_01_FLAT(self):
+        return self.raster_epoch / "01_FLAT"
+
+    def dir_02_CATEGORIZED(self):
+        return self.raster_epoch / "02_CATEGORIZED"
+
+    def dir_03_HANDLABELED(self):
+        return self.raster_epoch / "03_HANDLABELED"
+
+    def tsv_01_FLAT(self):
+        return self.raster_epoch / "01_FLAT.tsv"
+
+    def tsv_02_CATEGORIZED(self):
+        return self.raster_epoch / "02_CATEGORIZED.tsv"
+
+    def tsv_03_HANDLABELED(self):
+        return self.raster_epoch / "03_HANDLABELED.tsv"
+
+# %% ../nbs/01_embeddings.ipynb 18
 DEFAULT_BATCH_SIZE = 64
 
 
@@ -70,7 +97,7 @@ def sketchbook_dataloaders(sketchbooks_dir, **kwargs):
     )
     return dataloaders
 
-# %% ../nbs/01_embeddings.ipynb 18
+# %% ../nbs/01_embeddings.ipynb 21
 def batch_fnames_and_images(sketchbooks_dir):
     """
     Prepare data to compute embeddings over all images and store
@@ -84,14 +111,19 @@ def batch_fnames_and_images(sketchbooks_dir):
     num_batches = math.ceil(len(ordered_dls.train.items) / DEFAULT_BATCH_SIZE)
     assert num_batches == len(ordered_dls.train)
     batched_fnames = [
-        ordered_dls.train.items[i * 64 : (i + 1) * 64] for i in range(num_batches)
+        # ensure filenames are relative to the input dir
+        [
+            str(s).replace(f"{str(sketchbooks_dir)}/", "")
+            for s in ordered_dls.train.items[i * 64 : (i + 1) * 64]
+        ]
+        for i in range(num_batches)
     ]
     print(
         f"total items: {len(ordered_dls.train.items)}, num batches: {len(batched_fnames)}"
     )
     return batched_fnames, ordered_dls
 
-# %% ../nbs/01_embeddings.ipynb 22
+# %% ../nbs/01_embeddings.ipynb 25
 def predict_embeddings(model, xb):
     # import pdb
     # pdb.set_trace()
@@ -115,7 +147,7 @@ class Hook:
     def __exit__(self, *args):
         self.hook.remove()
 
-# %% ../nbs/01_embeddings.ipynb 25
+# %% ../nbs/01_embeddings.ipynb 28
 def embed_dir(input_dir, learner, strip_dir=None):
     """
     Get images paired with their filenames, grouped into batches.
@@ -163,7 +195,7 @@ def embed_dir(input_dir, learner, strip_dir=None):
                     "emb_csv": ",".join([str(f) for f in list(emb_j)]),
                 }
 
-# %% ../nbs/01_embeddings.ipynb 31
+# %% ../nbs/01_embeddings.ipynb 34
 import numpy as np
 
 
@@ -173,7 +205,7 @@ def pd_series_to_embs(df_emb_csv: pd.Series):
     embs = embs.astype(np.float32)
     return embs
 
-# %% ../nbs/01_embeddings.ipynb 34
+# %% ../nbs/01_embeddings.ipynb 37
 import faiss
 import json
 
@@ -193,7 +225,7 @@ def train_kmeans(embs, ncentroids=16, seed=42, niter=20):
 
     return kmeans
 
-# %% ../nbs/01_embeddings.ipynb 43
+# %% ../nbs/01_embeddings.ipynb 46
 def cluster_assigner(cluster_centroids, cluster_to_label=None):
     emb_dim = cluster_centroids.shape[1]
     kmeans_index = faiss.IndexFlatL2(emb_dim)
@@ -210,9 +242,9 @@ def cluster_assigner(cluster_centroids, cluster_to_label=None):
 
     return __knn_assigner
 
-# %% ../nbs/01_embeddings.ipynb 51
-def show_cluster(clusters_df, clusters, idx, colname="orig_fname"):
-    imgs = [Image.open(clusters_df.iloc[i][colname]) for i in clusters[idx]]
+# %% ../nbs/01_embeddings.ipynb 54
+def show_cluster(clusters_df, clusters, idx, colname="orig_fname", prefix=None):
+    imgs = [Image.open(prefix / clusters_df.iloc[i][colname]) for i in clusters[idx]]
 
     fig = plt.figure(figsize=(16.0, 16.0))
     grid = ImageGrid(
@@ -228,9 +260,14 @@ def show_cluster(clusters_df, clusters, idx, colname="orig_fname"):
 
     plt.show()
 
-# %% ../nbs/01_embeddings.ipynb 52
+# %% ../nbs/01_embeddings.ipynb 55
 def show_all_clusters(
-    clusters_df, clusters, cluster_idxs=None, title=None, colname="orig_fname"
+    clusters_df,
+    clusters,
+    cluster_idxs=None,
+    title=None,
+    colname="orig_fname",
+    prefix=None,
 ):
     select_idxs = cluster_idxs if cluster_idxs else range(len(clusters))
     num_clusters = len(select_idxs)
@@ -243,7 +280,10 @@ def show_all_clusters(
         axes_pad=0.02,
     )
     for row, cluster_idx in enumerate(select_idxs):
-        imgs = [Image.open(clusters_df.iloc[i][colname]) for i in clusters[cluster_idx]]
+        imgs = [
+            Image.open(prefix / clusters_df.iloc[i][colname])
+            for i in clusters[cluster_idx]
+        ]
 
         for col, im in enumerate(imgs):
             total_idx = col + row * examples_per_cluster
@@ -261,3 +301,61 @@ def show_all_clusters(
             else f"{title} (Cluster IDs: {','.join([str(i) for i in select_idxs])})"
         )
     plt.show()
+
+# %% ../nbs/01_embeddings.ipynb 63
+import math
+import os
+import shutil
+
+from PIL import Image
+
+
+def categorize_files(cdf, epoch, prev_epoch=None):
+    prev_existing_03_handlabeled_files = None
+    if prev_epoch:
+        prev_existing_03_handlabeled_files = (
+            L(
+                os.path.basename(f)
+                for f in get_image_files(prev_epoch.dir_03_HANDLABELED())
+            )
+            if prev_epoch_03_handlabeled_dir
+            else []
+        )
+
+    existing_02_categorized_files = L(
+        os.path.basename(f) for f in get_image_files(epoch_02_categorized_dir)
+    )
+    prev_existing_03_handlabeled_files = (
+        L(os.path.basename(f) for f in get_image_files(prev_epoch_03_handlabeled_dir))
+        if prev_epoch_03_handlabeled_dir
+        else []
+    )
+
+    for idx in range(len(cdf)):
+        row = cdf.iloc[idx]
+
+        indiv_fname = row.indiv_fname
+        if (
+            prev_existing_03_handlabeled_files
+            and indiv_fname in prev_existing_03_handlabeled_files
+        ):
+            print(
+                f"already hand-labeled in 03_HANDLABELED (PREV epoch) - skipping {indiv_fname} (to avoid duplicate work)"
+            )
+            continue
+
+        if indiv_fname in existing_02_categorized_files:
+            print(
+                f"already copied to 02_CATEGORIZED (curr epoch) - skipping {indiv_fname}"
+            )
+            continue
+
+        orig_abs_path = epoch.dir_01_FLAT() / row.orig_fname
+        categorized_abs_path = epoch.dir_02_CATEGORIZED() / row.categorized_path
+
+        categorized_dir = os.path.dirname(categorized_abs_path)
+        if not os.path.isdir(categorized_dir):
+            os.makedirs(categorized_dir)
+
+        print(f"writing to {categorized_abs_path}")
+        shutil.copy(orig_abs_path, categorized_abs_path)
