@@ -311,23 +311,12 @@ from PIL import Image
 
 
 def categorize_files(cdf, epoch, prev_epoch=None):
-    prev_existing_03_handlabeled_files = None
-    if prev_epoch:
-        prev_existing_03_handlabeled_files = (
-            L(
-                os.path.basename(f)
-                for f in get_image_files(prev_epoch.dir_03_HANDLABELED())
-            )
-            if prev_epoch_03_handlabeled_dir
-            else []
-        )
-
-    existing_02_categorized_files = L(
-        os.path.basename(f) for f in get_image_files(epoch_02_categorized_dir)
+    existing_categorized = L(
+        os.path.basename(f) for f in get_image_files(epoch.dir_02_CATEGORIZED())
     )
-    prev_existing_03_handlabeled_files = (
-        L(os.path.basename(f) for f in get_image_files(prev_epoch_03_handlabeled_dir))
-        if prev_epoch_03_handlabeled_dir
+    prev_handlabeled = (
+        L(os.path.basename(f) for f in get_image_files(prev_epoch.dir_03_HANDLABELED()))
+        if prev_epoch
         else []
     )
 
@@ -335,16 +324,13 @@ def categorize_files(cdf, epoch, prev_epoch=None):
         row = cdf.iloc[idx]
 
         indiv_fname = row.indiv_fname
-        if (
-            prev_existing_03_handlabeled_files
-            and indiv_fname in prev_existing_03_handlabeled_files
-        ):
+        if prev_handlabeled and indiv_fname in prev_handlabeled:
             print(
                 f"already hand-labeled in 03_HANDLABELED (PREV epoch) - skipping {indiv_fname} (to avoid duplicate work)"
             )
             continue
 
-        if indiv_fname in existing_02_categorized_files:
+        if indiv_fname in existing_categorized:
             print(
                 f"already copied to 02_CATEGORIZED (curr epoch) - skipping {indiv_fname}"
             )
