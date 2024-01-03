@@ -75,7 +75,7 @@ class SketchbookEpoch:
     def tsv_03_HANDLABELED(self):
         return self.raster_epoch / "03_HANDLABELED.tsv"
 
-# %% ../nbs/01_embeddings.ipynb 18
+# %% ../nbs/01_embeddings.ipynb 20
 DEFAULT_BATCH_SIZE = 64
 
 
@@ -97,7 +97,7 @@ def sketchbook_dataloaders(sketchbooks_dir, **kwargs):
     )
     return dataloaders
 
-# %% ../nbs/01_embeddings.ipynb 21
+# %% ../nbs/01_embeddings.ipynb 23
 def batch_fnames_and_images(sketchbooks_dir):
     """
     Prepare data to compute embeddings over all images and store
@@ -123,7 +123,7 @@ def batch_fnames_and_images(sketchbooks_dir):
     )
     return batched_fnames, ordered_dls
 
-# %% ../nbs/01_embeddings.ipynb 25
+# %% ../nbs/01_embeddings.ipynb 27
 def predict_embeddings(model, xb):
     # import pdb
     # pdb.set_trace()
@@ -147,7 +147,7 @@ class Hook:
     def __exit__(self, *args):
         self.hook.remove()
 
-# %% ../nbs/01_embeddings.ipynb 28
+# %% ../nbs/01_embeddings.ipynb 30
 def embed_dir(input_dir, learner, strip_dir=None):
     """
     Get images paired with their filenames, grouped into batches.
@@ -195,7 +195,7 @@ def embed_dir(input_dir, learner, strip_dir=None):
                     "emb_csv": ",".join([str(f) for f in list(emb_j)]),
                 }
 
-# %% ../nbs/01_embeddings.ipynb 34
+# %% ../nbs/01_embeddings.ipynb 36
 import numpy as np
 
 
@@ -205,7 +205,7 @@ def pd_series_to_embs(df_emb_csv: pd.Series):
     embs = embs.astype(np.float32)
     return embs
 
-# %% ../nbs/01_embeddings.ipynb 37
+# %% ../nbs/01_embeddings.ipynb 39
 import faiss
 import json
 
@@ -225,7 +225,7 @@ def train_kmeans(embs, ncentroids=16, seed=42, niter=20):
 
     return kmeans
 
-# %% ../nbs/01_embeddings.ipynb 46
+# %% ../nbs/01_embeddings.ipynb 48
 def cluster_assigner(cluster_centroids, cluster_to_label=None):
     emb_dim = cluster_centroids.shape[1]
     kmeans_index = faiss.IndexFlatL2(emb_dim)
@@ -242,7 +242,7 @@ def cluster_assigner(cluster_centroids, cluster_to_label=None):
 
     return __knn_assigner
 
-# %% ../nbs/01_embeddings.ipynb 54
+# %% ../nbs/01_embeddings.ipynb 57
 def show_cluster(clusters_df, clusters, idx, colname="orig_fname", prefix=None):
     imgs = [Image.open(prefix / clusters_df.iloc[i][colname]) for i in clusters[idx]]
 
@@ -260,7 +260,7 @@ def show_cluster(clusters_df, clusters, idx, colname="orig_fname", prefix=None):
 
     plt.show()
 
-# %% ../nbs/01_embeddings.ipynb 55
+# %% ../nbs/01_embeddings.ipynb 58
 def show_all_clusters(
     clusters_df,
     clusters,
@@ -302,7 +302,7 @@ def show_all_clusters(
         )
     plt.show()
 
-# %% ../nbs/01_embeddings.ipynb 63
+# %% ../nbs/01_embeddings.ipynb 66
 import math
 import os
 import shutil
