@@ -66,6 +66,9 @@ class SketchbookEpoch:
     def dir_03_HANDLABELED(self):
         return self.raster_epoch / "03_HANDLABELED"
 
+    def dir_04_CROP(self):
+        return self.raster_epoch / "04_CROP"
+
     def tsv_01_FLAT(self):
         return self.raster_epoch / "01_FLAT.tsv"
 
