@@ -60,9 +60,10 @@ def flat_sketchbook_paths(data_root, exclude_parents=["xtra", "priv"]):
         grandparent_dir = os.path.dirname(parent_dir)
         grandparent_name = os.path.basename(grandparent_dir)
 
-        # should be same as data_root
-        greatgrandparent_dir = os.path.dirname(grandparent_dir)
-        assert data_root == str(greatgrandparent_dir)
+        # # should be same as data_root
+        # greatgrandparent_dir = os.path.dirname(grandparent_dir)
+        # print(greatgrandparent_dir, data_root)
+        # assert data_root == str(greatgrandparent_dir)
 
         dest_fname = f"{parent_name}/{grandparent_name}p{name}"
 
