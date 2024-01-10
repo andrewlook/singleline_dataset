@@ -69,6 +69,12 @@ class SketchbookEpoch:
     def dir_04_CROP(self):
         return self.raster_epoch / "04_CROP"
 
+    def dir_05_STROKE3(self):
+        return self.raster_epoch / "05_STROKE3"
+
+    def dir_06_BBOXSEP(self):
+        return self.raster_epoch / "06_BBOXSEP"
+
     def tsv_01_FLAT(self):
         return self.raster_epoch / "01_FLAT.tsv"
 
@@ -77,6 +83,15 @@ class SketchbookEpoch:
 
     def tsv_03_HANDLABELED(self):
         return self.raster_epoch / "03_HANDLABELED.tsv"
+
+    def tsv_04_CROP(self):
+        return self.raster_epoch / "04_CROP.tsv"
+
+    def tsv_05_STROKE3(self):
+        return self.raster_epoch / "05_STROKE3.tsv"
+
+    def tsv_06_BBOXSEP(self):
+        return self.raster_epoch / "06_BBOXSEP.tsv"
 
 # %% ../nbs/01_embeddings.ipynb 20
 DEFAULT_BATCH_SIZE = 64
