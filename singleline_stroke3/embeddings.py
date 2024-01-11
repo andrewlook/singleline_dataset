@@ -75,6 +75,9 @@ class SketchbookEpoch:
     def dir_06_BBOXSEP(self):
         return self.raster_epoch / "06_BBOXSEP"
 
+    def dir_07_FILTER(self):
+        return self.raster_epoch / "07_FILTER"
+
     def tsv_01_FLAT(self):
         return self.raster_epoch / "01_FLAT.tsv"
 
@@ -92,6 +95,9 @@ class SketchbookEpoch:
 
     def tsv_06_BBOXSEP(self):
         return self.raster_epoch / "06_BBOXSEP.tsv"
+
+    def tsv_07_FILTER(self):
+        return self.raster_epoch / "07_FILTER.tsv"
 
 # %% ../nbs/01_embeddings.ipynb 20
 DEFAULT_BATCH_SIZE = 64
@@ -254,7 +260,7 @@ def cluster_assigner(cluster_centroids, cluster_to_label=None):
         knn_label = (
             [cluster_to_label[str(i[0])] for i in knn_clusterid]
             if cluster_to_label
-            else [None] * len(knn_cluster_id)
+            else [None] * len(knn_clusterid)
         )
         return knn_dist, knn_clusterid, knn_label
 
