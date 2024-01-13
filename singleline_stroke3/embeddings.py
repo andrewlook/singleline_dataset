@@ -3,8 +3,8 @@
 # %% auto 0
 __all__ = ['DEFAULT_DATA_HOME', 'PRETRAINED_MODEL_PATH', 'PRETRAINED_CHECKPOINT', 'DEFAULT_BATCH_SIZE', 'load_resnet',
            'SketchbookEpoch', 'sketchbook_dataloaders', 'batch_fnames_and_images', 'predict_embeddings', 'Hook',
-           'embed_dir', 'pd_series_to_embs', 'train_kmeans', 'cluster_assigner', 'show_cluster', 'show_all_clusters',
-           'categorize_files']
+           'embed_dir', 'pd_series_to_embs', 'train_kmeans', 'save_centroids', 'load_centroids', 'cluster_assigner',
+           'show_cluster', 'show_all_clusters', 'categorize_files']
 
 # %% ../nbs/01_embeddings.ipynb 4
 import math
@@ -78,6 +78,9 @@ class SketchbookEpoch:
     def dir_07_FILTER(self):
         return self.raster_epoch / "07_FILTER"
 
+    def dir_08_THRESHOLDED(self):
+        return self.raster_epoch / "08_THRESHOLDED"
+
     def tsv_01_FLAT(self):
         return self.raster_epoch / "01_FLAT.tsv"
 
@@ -98,6 +101,9 @@ class SketchbookEpoch:
 
     def tsv_07_FILTER(self):
         return self.raster_epoch / "07_FILTER.tsv"
+
+    def tsv_08_THRESHOLDED(self):
+        return self.raster_epoch / "08_THRESHOLDED.tsv"
 
 # %% ../nbs/01_embeddings.ipynb 20
 DEFAULT_BATCH_SIZE = 64
@@ -248,6 +254,49 @@ def train_kmeans(embs, ncentroids=16, seed=42, niter=20):
     kmeans.train(embs)
 
     return kmeans
+
+# %% ../nbs/01_embeddings.ipynb 45
+def save_centroids(
+    centroids,
+    cluster_to_label,
+    data_home=DEFAULT_DATA_HOME,
+    model_path=PRETRAINED_MODEL_PATH,
+    extra_suffix="",
+):
+    """
+    Important: centroids labeled for classification are specific to the trained model
+    (and its embedding space) rather than to a specific set of images. If I add more
+    images over time, I want to map them in the same embedding space to clusters that
+    I've already labeled.
+    """
+    CLUSTER_CENTROIDS_FNAME = (
+        data_home / f"{model_path}_cluster_centroids{extra_suffix}.json"
+    )
+    CLUSTER_LABELS_FNAME = data_home / f"{model_path}_cluster_labels{extra_suffix}.json"
+
+    with open(CLUSTER_CENTROIDS_FNAME, "w") as outfile:
+        json.dump({"centroids": centroids.tolist()}, outfile, indent=2)
+    print(f"wrote to {CLUSTER_CENTROIDS_FNAME}")
+    with open(CLUSTER_LABELS_FNAME, "w") as outfile:
+        json.dump(cluster_to_label, outfile, indent=2)
+    print(f"wrote to {CLUSTER_LABELS_FNAME}")
+
+
+def load_centroids(
+    data_home=DEFAULT_DATA_HOME, model_path=PRETRAINED_MODEL_PATH, extra_suffix=""
+):
+    CLUSTER_CENTROIDS_FNAME = (
+        data_home / f"{model_path}_cluster_centroids{extra_suffix}.json"
+    )
+    CLUSTER_LABELS_FNAME = data_home / f"{model_path}_cluster_labels{extra_suffix}.json"
+
+    print(f"reading {CLUSTER_CENTROIDS_FNAME}")
+    with open(CLUSTER_CENTROIDS_FNAME, "r") as outfile:
+        centroids = np.array(json.load(outfile)["centroids"], dtype=np.float32)
+    print(f"reading {CLUSTER_LABELS_FNAME}")
+    with open(CLUSTER_LABELS_FNAME, "r") as outfile:
+        cluster_to_label = json.load(outfile)
+    return centroids, cluster_to_label
 
 # %% ../nbs/01_embeddings.ipynb 48
 def cluster_assigner(cluster_centroids, cluster_to_label=None):
