@@ -3,10 +3,19 @@ website:
     contents:
       - index.ipynb
       - 00_fileorg.ipynb
-      - 00_svg.ipynb
-      - 01_display.ipynb
-      - 02_transforms.ipynb
-      - 03_strokes.ipynb
-      - 04_dataset.ipynb
-      - 06_bounding_boxes.ipynb
-      - 10_analysis.ipynb
+      - 01_embeddings.ipynb
+      - 10_svg.ipynb
+      - 11_display.ipynb
+      - 12_transforms.ipynb
+      - 13_strokes.ipynb
+      - 14_dataset.ipynb
+      - 16_bounding_boxes.ipynb
+      - 19_stroke3_analysis.ipynb
+      - 20_e2e_new_classifier.ipynb
+      - 21_e2e_subclusters.ipynb
+      - 30_e2e_reuse_classifier.ipynb
+      - 31_Embed_Sep_Bboxes.ipynb
+      - 41_viz_subclusters.ipynb
+      - 42_emb_projector.ipynb
+      - 43_vectorize.ipynb
+      - 44_BLIP.ipynb
