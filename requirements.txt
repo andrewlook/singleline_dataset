@@ -9,3 +9,4 @@ pyautotrace
 Pillow
 fastai
 fastcore
+faiss-cpu
