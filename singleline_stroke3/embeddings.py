@@ -110,7 +110,7 @@ DEFAULT_BATCH_SIZE = 64
 
 
 def sketchbook_dataloaders(sketchbooks_dir, **kwargs):
-    """Loads image data and label based on parent folder - minimum data needed to train CNN"""
+    """ Loads image data and label based on parent folder - minimum data needed to train CNN """
     path = Path(sketchbooks_dir)
 
     files = get_image_files(path)
@@ -240,17 +240,12 @@ import faiss
 import json
 
 
-def train_kmeans(embs, ncentroids=16, seed=42, niter=20):
+def train_kmeans(embs, ncentroids=16, **kwargs):
     emb_dim = embs.shape[1]
     index = faiss.IndexFlatL2(emb_dim)
     index.add(embs)
 
-    ncentroids = 16
-    niter = 20
-    verbose = True
-    kmeans = faiss.Kmeans(
-        emb_dim, ncentroids, niter=niter, verbose=verbose, gpu=True, seed=42
-    )
+    kmeans = faiss.Kmeans(emb_dim, ncentroids, **kwargs)
     kmeans.train(embs)
 
     return kmeans
