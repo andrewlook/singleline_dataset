@@ -19,3 +19,6 @@ website:
       - 42_emb_projector.ipynb
       - 43_vectorize.ipynb
       - 44_BLIP.ipynb
+      - 50_tokenize.ipynb
+      - 50a_transformer_results.ipynb
+      - 51_data_augmentation.ipynb

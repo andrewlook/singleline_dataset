@@ -5,14 +5,11 @@ __all__ = ['DEFAULT_HOME_DIR', 'singleline_data_home', 'raster_dir', 'svg_dir', 
            'flat_sketchbook_paths', 'flatten_sketchbooks']
 
 # %% ../nbs/00_fileorg.ipynb 4
-import math
 import os
 import shutil
 from pathlib import Path
-from pprint import pprint
 
-import pandas as pd
-from fastai.vision.all import *
+from fastai.vision.all import get_image_files
 
 # %% ../nbs/00_fileorg.ipynb 5
 DEFAULT_HOME_DIR = Path.home() / "singleline_data"
