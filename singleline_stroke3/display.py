@@ -432,7 +432,7 @@ def image_urls(urls, labels=None, domain=None, w=None):
         label = labels[i] if labels is not None else i
         img_html = _image_html(url, w=w, domain=domain)
         s += """<div style="margin-right:10px; margin-top: 4px;">
-              <p style="align:center; color: #999999">{label}</p>
+              <p style="align:center; color: #999999; font-size: 11px">{label}</p>
               <br/>
               {img_html}
             </div>""".format(
