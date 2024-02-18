@@ -26,7 +26,7 @@ import PIL.Image
 
 # %% auto 0
 __all__ = ['log', 'plot_strokes', 'create_animation', 'show_video', 'randcolor', 'render_strokes', 'render_deltas',
-           'serialize_array', 'image', 'images']
+           'serialize_array', 'image', 'images', 'image_urls']
 
 # %% ../nbs/11_display.ipynb 6
 def plot_strokes(
@@ -368,10 +368,7 @@ def _image_url(array, fmt="png", mode="data", quality=90, domain=None):
 
 
 # public functions
-
-
-def _image_html(array, w=None, domain=None, fmt="png"):
-    url = _image_url(array, domain=domain, fmt=fmt)
+def _image_html(url, w=None, domain=None, fmt="png"):
     style = "image-rendering: pixelated; image-rendering: crisp-edges;"
     if w is not None:
         style += "width: {w}px;".format(w=w)
@@ -389,7 +386,7 @@ def image(array, domain=None, w=None, format="png", **kwargs):
         size unchanged if None
     """
 
-    _display_html(_image_html(array, w=w, domain=domain, fmt=format))
+    _display_html(_image_html(_image_url(array, domain=domain, fmt=format), w=w))
 
 
 def images(arrays, labels=None, domain=None, w=None):
@@ -407,9 +404,36 @@ def images(arrays, labels=None, domain=None, w=None):
     s = '<div style="display: flex; flex-direction: row;">'
     for i, array in enumerate(arrays):
         label = labels[i] if labels is not None else i
-        img_html = _image_html(array, w=w, domain=domain)
+        img_html = _image_html(_image_url(array), w=w, domain=domain)
         s += """<div style="margin-right:10px; margin-top: 4px;">
               {label} <br/>
+              {img_html}
+            </div>""".format(
+            **locals()
+        )
+    s += "</div>"
+    _display_html(s)
+
+
+def image_urls(urls, labels=None, domain=None, w=None):
+    """Display a list of images with optional labels.
+
+    Args:
+      arrays: A list of image URLs
+      labels: A list of strings to label each image.
+        Defaults to show index if None
+      domain: Domain of pixel values, inferred from min & max values if None
+      w: width of output image, scaled using nearest neighbor interpolation.
+        size unchanged if None
+    """
+
+    s = '<div style="display: flex; flex-direction: row;">'
+    for i, url in enumerate(urls):
+        label = labels[i] if labels is not None else i
+        img_html = _image_html(url, w=w, domain=domain)
+        s += """<div style="margin-right:10px; margin-top: 4px;">
+              <p style="align:center; color: #999999">{label}</p>
+              <br/>
               {img_html}
             </div>""".format(
             **locals()
