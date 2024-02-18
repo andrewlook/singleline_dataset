@@ -20,7 +20,6 @@ def _path_from_env(variable, default):
     if value and os.path.isabs(value):
         print(f"found env var {variable}, using: {value}")
         return Path(value)
-    print(f"no env var {variable}, defaulting to: {value}")
     return Path(default)
 
 
