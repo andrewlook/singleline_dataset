@@ -32,13 +32,14 @@ __all__ = ['log', 'plot_strokes', 'create_animation', 'show_video', 'randcolor',
 def plot_strokes(
     strokes,
     target_size=200,
+    figsz=5,
     lw=2,
     bounding_boxes=False,
     transparent=False,
     frameon=False,
     fname=None,
 ):
-    fig = plt.figure(frameon=frameon)
+    fig = plt.figure(frameon=frameon, figsize=(figsz, figsz))
     ax = plt.axes(
         xlim=(0, target_size + 0.1 * target_size),
         ylim=(-target_size - 0.1 * target_size),
@@ -84,7 +85,15 @@ def plot_strokes(
 
 # %% ../nbs/11_display.ipynb 8
 def create_animation(
-    strokes, fname="video.mp4", fps=60, target_size=200, lw=2, trailing_frames=30
+    strokes,
+    fname="video.mp4",
+    fps=60,
+    target_size=200,
+    figsz=5,
+    lw=2,
+    trailing_frames=30,
+    facecolor="white",
+    linecolor=None,
 ):
     seq_length = np.vstack(strokes).shape[0]
     print(seq_length)
@@ -93,10 +102,13 @@ def create_animation(
     j = 0
 
     # First set up the figure, the axis, and the plot element we want to animate
-    fig = plt.figure()
+    fig = plt.figure(figsize=(figsz, figsz), dpi=300)
     ax = plt.axes(xlim=(0, target_size + 2 * lw), ylim=(-target_size - 2 * lw, 0))
-    ax.set_facecolor("white")
+    fig.set_facecolor(facecolor)
+    ax.set_facecolor(facecolor)
     (line,) = ax.plot([], [], lw=lw)
+    if linecolor:
+        line.set_color(linecolor)
 
     # remove the axis
     ax.grid = False
@@ -104,6 +116,8 @@ def create_animation(
     ax.set_yticks([])
     # remove the frame
     fig.patch.set_visible(False)
+    ax.patch.set_visible(False)
+    ax.axis("off")
 
     # initialization function: plot the background of each frame
     def init():
@@ -122,6 +136,8 @@ def create_animation(
                 i += 1
                 j = 0
                 (line,) = ax.plot([], [], lw=lw)
+                if linecolor:
+                    line.set_color(linecolor)
             else:
                 j += 1
         else:
@@ -139,7 +155,7 @@ def create_animation(
     plt.close()
 
     # save the animation as an mp4.
-    anim.save(fname, fps=fps, extra_args=["-vcodec", "libx264"])
+    anim.save(fname, fps=fps, extra_args=["-vcodec", "libx264"], bitrate=500, dpi=300)
 
 # %% ../nbs/11_display.ipynb 9
 def show_video(fname="video.mp4"):
