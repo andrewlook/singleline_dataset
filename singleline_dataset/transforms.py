@@ -20,21 +20,21 @@ def apply_transform(coords_2d, xform):
     assert coords_full.shape[0] == coords_2d.shape[0]
     assert coords_full.shape[1] == 3
 
-    return xform.dot(coords_full.transpose()).transpose()
+    return xform.dot(coords_full.transpose()).transpose()[:, :2]
 
-# %% ../nbs/12_transforms.ipynb 7
+# %% ../nbs/12_transforms.ipynb 9
 def identity_xform():
     return np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 
-# %% ../nbs/12_transforms.ipynb 8
-def scale_xform(scale_x, scale_y):
-    return np.array([[scale_x, 0, 0], [0, scale_y, 0], [0, 0, 1]])
+# %% ../nbs/12_transforms.ipynb 12
+def scale_xform(sx, sy):
+    return np.array([[sx, 0, 0], [0, sy, 0], [0, 0, 1]])
 
-# %% ../nbs/12_transforms.ipynb 9
-def translate_xform(translate_x, translate_y):
-    return np.array([[1, 0, translate_x], [0, 1, translate_y], [0, 0, 1]])
+# %% ../nbs/12_transforms.ipynb 15
+def translate_xform(tx, ty):
+    return np.array([[1, 0, tx], [0, 1, ty], [0, 0, 1]])
 
-# %% ../nbs/12_transforms.ipynb 10
+# %% ../nbs/12_transforms.ipynb 21
 def rotate_xform(rotate_angle):
     if rotate_angle % 360 == 0:
         return identity_xform()
@@ -43,7 +43,7 @@ def rotate_xform(rotate_angle):
     sin_theta = np.sin(theta)
     return np.array([[cos_theta, -sin_theta, 0], [sin_theta, cos_theta, 0], [0, 0, 1]])
 
-# %% ../nbs/12_transforms.ipynb 12
+# %% ../nbs/12_transforms.ipynb 23
 class BoundingBox:
     xmin: float
     xmax: float
@@ -130,7 +130,7 @@ class BoundingBox:
             translate_xform(-self.xmin, -self.ymin)
         )
 
-# %% ../nbs/12_transforms.ipynb 14
+# %% ../nbs/12_transforms.ipynb 31
 def strokes_to_points(strokes):
     all = []
     for s in strokes:
@@ -152,7 +152,7 @@ def strokes_to_deltas(strokes):
     points = strokes_to_points(strokes)
     return points_to_deltas(points)
 
-# %% ../nbs/12_transforms.ipynb 15
+# %% ../nbs/12_transforms.ipynb 32
 def deltas_to_points(_seq):
     seq = np.zeros_like(_seq)
     seq[:, 0:2] = np.cumsum(_seq[:, 0:2], axis=0)
@@ -171,14 +171,14 @@ def deltas_to_strokes(_seq):
     points = deltas_to_points(_seq)
     return points_to_strokes(points)
 
-# %% ../nbs/12_transforms.ipynb 17
+# %% ../nbs/12_transforms.ipynb 34
 from rdp import rdp
 
 
 def rdp_strokes(strokes, epsilon=1.0):
     return [rdp(s, epsilon=epsilon) for s in strokes]
 
-# %% ../nbs/12_transforms.ipynb 18
+# %% ../nbs/12_transforms.ipynb 35
 def stroke_rdp_deltas(rescaled_strokes, epsilon=2.0):
     rdp_result = rdp_strokes(rescaled_strokes, epsilon)
     deltas = strokes_to_deltas(rdp_result)

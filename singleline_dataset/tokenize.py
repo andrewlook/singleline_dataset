@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['Stroke3Tokenizer']
 
-# %% ../nbs/50_tokenize.ipynb 4
+# %% ../nbs/50_tokenize.ipynb 5
 import math
 import json
 
@@ -16,7 +16,7 @@ from .display import *
 from .transforms import *
 from .fileorg import *
 
-# %% ../nbs/50_tokenize.ipynb 14
+# %% ../nbs/50_tokenize.ipynb 15
 class Stroke3Tokenizer(object):
     def __init__(self, centroids_zero, centroids_one):
         self.centroids_zero = centroids_zero

@@ -11,9 +11,7 @@ website:
       - 14_dataset.ipynb
       - 16_bounding_boxes.ipynb
       - 19_stroke3_analysis.ipynb
-      - 20_e2e_new_classifier.ipynb
       - 21_e2e_subclusters.ipynb
-      - 30_e2e_reuse_classifier.ipynb
       - 31_Embed_Sep_Bboxes.ipynb
       - 41_viz_subclusters.ipynb
       - 42_emb_projector.ipynb

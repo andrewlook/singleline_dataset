@@ -6,7 +6,7 @@ __all__ = ['DEFAULT_DATA_HOME', 'PRETRAINED_MODEL_PATH', 'PRETRAINED_CHECKPOINT'
            'embed_dir', 'pd_series_to_embs', 'train_kmeans', 'save_centroids', 'load_centroids', 'cluster_assigner',
            'show_cluster', 'show_all_clusters', 'categorize_files']
 
-# %% ../nbs/01_embeddings.ipynb 4
+# %% ../nbs/01_embeddings.ipynb 5
 import math
 import json
 
@@ -19,7 +19,7 @@ from fastai.vision.all import *
 
 from .fileorg import *
 
-# %% ../nbs/01_embeddings.ipynb 6
+# %% ../nbs/01_embeddings.ipynb 7
 DEFAULT_DATA_HOME = singleline_data_home("../data_home")
 PRETRAINED_MODEL_PATH = "models/epoch-20231128/01_FLAT"
 PRETRAINED_CHECKPOINT = "model_20231121_2epochs"
@@ -49,7 +49,7 @@ def load_resnet(
 
     return learn
 
-# %% ../nbs/01_embeddings.ipynb 15
+# %% ../nbs/01_embeddings.ipynb 16
 class SketchbookEpoch:
     def __init__(self, epoch, data_home="../data_home"):
         self.data_home = singleline_data_home(default=data_home)
@@ -105,7 +105,7 @@ class SketchbookEpoch:
     def tsv_08_THRESHOLDED(self):
         return self.raster_epoch / "08_THRESHOLDED.tsv"
 
-# %% ../nbs/01_embeddings.ipynb 20
+# %% ../nbs/01_embeddings.ipynb 21
 DEFAULT_BATCH_SIZE = 64
 
 
@@ -127,7 +127,7 @@ def sketchbook_dataloaders(sketchbooks_dir, **kwargs):
     )
     return dataloaders
 
-# %% ../nbs/01_embeddings.ipynb 23
+# %% ../nbs/01_embeddings.ipynb 24
 def batch_fnames_and_images(sketchbooks_dir):
     """
     Prepare data to compute embeddings over all images and store
@@ -153,7 +153,7 @@ def batch_fnames_and_images(sketchbooks_dir):
     )
     return batched_fnames, ordered_dls
 
-# %% ../nbs/01_embeddings.ipynb 27
+# %% ../nbs/01_embeddings.ipynb 28
 def predict_embeddings(model, xb):
     # import pdb
     # pdb.set_trace()
@@ -177,7 +177,7 @@ class Hook:
     def __exit__(self, *args):
         self.hook.remove()
 
-# %% ../nbs/01_embeddings.ipynb 30
+# %% ../nbs/01_embeddings.ipynb 31
 def embed_dir(input_dir, learner, strip_dir=None):
     """
     Get images paired with their filenames, grouped into batches.
@@ -225,7 +225,7 @@ def embed_dir(input_dir, learner, strip_dir=None):
                     "emb_csv": ",".join([str(f) for f in list(emb_j)]),
                 }
 
-# %% ../nbs/01_embeddings.ipynb 36
+# %% ../nbs/01_embeddings.ipynb 37
 import numpy as np
 
 
@@ -235,7 +235,7 @@ def pd_series_to_embs(df_emb_csv: pd.Series):
     embs = embs.astype(np.float32)
     return embs
 
-# %% ../nbs/01_embeddings.ipynb 39
+# %% ../nbs/01_embeddings.ipynb 40
 import faiss
 import json
 
@@ -250,7 +250,7 @@ def train_kmeans(embs, ncentroids=16, **kwargs):
 
     return kmeans
 
-# %% ../nbs/01_embeddings.ipynb 45
+# %% ../nbs/01_embeddings.ipynb 46
 def save_centroids(
     centroids,
     cluster_to_label,
@@ -293,7 +293,7 @@ def load_centroids(
         cluster_to_label = json.load(outfile)
     return centroids, cluster_to_label
 
-# %% ../nbs/01_embeddings.ipynb 48
+# %% ../nbs/01_embeddings.ipynb 49
 def cluster_assigner(cluster_centroids, cluster_to_label=None):
     emb_dim = cluster_centroids.shape[1]
     kmeans_index = faiss.IndexFlatL2(emb_dim)
@@ -310,7 +310,7 @@ def cluster_assigner(cluster_centroids, cluster_to_label=None):
 
     return __knn_assigner
 
-# %% ../nbs/01_embeddings.ipynb 57
+# %% ../nbs/01_embeddings.ipynb 58
 def show_cluster(clusters_df, clusters, idx, colname="orig_fname", prefix=None):
     imgs = [Image.open(prefix / clusters_df.iloc[i][colname]) for i in clusters[idx]]
 
@@ -328,7 +328,7 @@ def show_cluster(clusters_df, clusters, idx, colname="orig_fname", prefix=None):
 
     plt.show()
 
-# %% ../nbs/01_embeddings.ipynb 58
+# %% ../nbs/01_embeddings.ipynb 59
 def show_all_clusters(
     clusters_df,
     clusters,
@@ -370,7 +370,7 @@ def show_all_clusters(
         )
     plt.show()
 
-# %% ../nbs/01_embeddings.ipynb 66
+# %% ../nbs/01_embeddings.ipynb 67
 import math
 import os
 import shutil

@@ -17,7 +17,7 @@ from .dataset import *
 from .display import *
 from .fileorg import *
 from .strokes import *
-from .svg import *
+from .svg_files import *
 from .transforms import *
 
 # %% ../nbs/16_bounding_boxes.ipynb 11

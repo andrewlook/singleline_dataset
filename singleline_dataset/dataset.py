@@ -11,7 +11,7 @@ import pandas as pd
 
 from .display import *
 from .strokes import *
-from .svg import *
+from .svg_files import *
 from .transforms import *
 
 # %% ../nbs/14_dataset.ipynb 7

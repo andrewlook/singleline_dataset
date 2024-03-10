@@ -10,7 +10,7 @@ import copy
 
 import numpy as np
 
-from .svg import *
+from .svg_files import *
 from .transforms import *
 
 # %% ../nbs/13_strokes.ipynb 16
@@ -51,7 +51,7 @@ def join_endpoints(strokes, l_idx, l_pos, r_idx, r_pos):
     joined = join_2_strokes(lhs, l_pos, rhs, r_pos)
     return [joined] + remaining
 
-# %% ../nbs/13_strokes.ipynb 22
+# %% ../nbs/13_strokes.ipynb 21
 def closest_endpoint_pair(strokes):
     min_dist = 1e10
     l_idx = None
@@ -135,10 +135,7 @@ def merge_until(strokes, dist_threshold=10.0):
     # )
     return curr_strokes, all_iterations
 
-# %% ../nbs/13_strokes.ipynb 24
-# | export
-
-# %% ../nbs/13_strokes.ipynb 31
+# %% ../nbs/13_strokes.ipynb 29
 def closest_splice_pair(strokes):
     min_dist = 1e10
     l_idx = None
@@ -169,7 +166,7 @@ def closest_splice_pair(strokes):
 
     return min_dist, l_idx, r_idx, r_sub
 
-# %% ../nbs/13_strokes.ipynb 32
+# %% ../nbs/13_strokes.ipynb 30
 def splice_2_strokes(lhs, rhs, k):
     return np.concatenate([rhs[:k], lhs, rhs[k:]], axis=0)
 
