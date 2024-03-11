@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.551">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Fill in a module description here">
+
+<title>singleline_dataset - tokenize</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="singleline_dataset - tokenize">
+<meta property="og:description" content="Fill in a module description here">
+<meta property="og:site_name" content="singleline_dataset">
+<meta name="twitter:title" content="singleline_dataset - tokenize">
+<meta name="twitter:description" content="Fill in a module description here">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">singleline_dataset</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transformer_results.html">tokenize</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">singleline_dataset</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fileorg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">fileorg</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./embeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">embeddings</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./svg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">svg_files</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">display</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transforms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">transforms</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./strokes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">path_joining</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">dataset</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bounding_boxes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">bounding_boxes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./stroke3_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">analysis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e2e_subclusters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">clustering</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./embed_sep_bboxes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">vectorize</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./viz_subclusters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">e2e</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./emb_projector.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">e2e</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./vectorize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">vectorize</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./blip.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BLIP captioning</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tokenize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">tokenize</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformer_results.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">tokenize</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_augmentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">data_augmentation</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">tokenize</h1>
+</div>
+
+<div>
+  <div class="description">
+    Fill in a module description here
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<div id="cell-3" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> singleline_dataset.embeddings <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> singleline_dataset.display <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> singleline_dataset.transforms <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> singleline_dataset.fileorg <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-4" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>EXTERNAL_PARENT_DIR <span class="op">=</span> Path(<span class="st">'/Users/al/Dropbox/2-Areas/2-Sketchbooks'</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>EXTERNAL_SKETCHBOOKS_DIR <span class="op">=</span> EXTERNAL_PARENT_DIR <span class="op">/</span> <span class="st">'sketchbooks'</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>EXTERNAL_DATA_HOME <span class="op">=</span> EXTERNAL_PARENT_DIR <span class="op">/</span> <span class="st">'singleline_data'</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>EPOCH <span class="op">=</span> SketchbookEpoch(epoch<span class="op">=</span><span class="st">'20240104'</span>, data_home<span class="op">=</span>EXTERNAL_DATA_HOME)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>no env var SINGLELINE_DATA_HOME, defaulting to: None</code></pre>
+</div>
+</div>
+<div id="cell-7" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> singleline_dataset.tokenize <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> Stroke3Tokenizer.load(EPOCH.dir_08_THRESHOLDED())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(2048, 3)</code></pre>
+</div>
+</div>
+<section id="test-2024-02-11" class="level4">
+<h4 class="anchored" data-anchor-id="test-2024-02-11">TEST: 2024-02-11</h4>
+<div id="cell-10" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>toks0 <span class="op">=</span> [</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">704</span>, <span class="dv">1116</span>, <span class="dv">1312</span>,  <span class="dv">418</span>, <span class="dv">1892</span>,  <span class="dv">263</span>,  <span class="dv">701</span>,  <span class="dv">418</span>,  <span class="dv">985</span>, <span class="dv">1161</span>,  <span class="dv">488</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>         <span class="dv">418</span>, <span class="dv">1745</span>,  <span class="dv">418</span>, <span class="dv">1310</span>,  <span class="dv">418</span>,  <span class="dv">985</span>, <span class="dv">1788</span>,  <span class="dv">415</span>,   <span class="dv">42</span>,  <span class="dv">595</span>, <span class="dv">1761</span>, <span class="dv">1086</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1727</span>,  <span class="dv">500</span>,  <span class="dv">766</span>,  <span class="dv">595</span>,   <span class="dv">42</span>,  <span class="dv">678</span>,  <span class="dv">458</span>,  <span class="dv">150</span>,  <span class="dv">278</span>, <span class="dv">1029</span>,  <span class="dv">150</span>, <span class="dv">1017</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1541</span>,  <span class="dv">488</span>,  <span class="dv">595</span>,  <span class="dv">329</span>,  <span class="dv">755</span>, <span class="dv">1745</span>, <span class="dv">1541</span>,  <span class="dv">984</span>,  <span class="dv">488</span>,  <span class="dv">159</span>, <span class="dv">1139</span>, <span class="dv">1546</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>         <span class="dv">488</span>,  <span class="dv">415</span>, <span class="dv">1761</span>, <span class="dv">1835</span>, <span class="dv">1310</span>, <span class="dv">1310</span>,  <span class="dv">433</span>,  <span class="dv">259</span>,  <span class="dv">758</span>, <span class="dv">1745</span>,  <span class="dv">150</span>, <span class="dv">1029</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1761</span>,  <span class="dv">521</span>, <span class="dv">1903</span>, <span class="dv">1203</span>,  <span class="dv">521</span>,  <span class="dv">150</span>, <span class="dv">1310</span>, <span class="dv">1809</span>,   <span class="dv">42</span>, <span class="dv">1086</span>,  <span class="dv">415</span>,  <span class="dv">150</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>         <span class="dv">893</span>, <span class="dv">1310</span>, <span class="dv">1745</span>,  <span class="dv">150</span>, <span class="dv">1745</span>, <span class="dv">1029</span>,  <span class="dv">150</span>,  <span class="dv">758</span>, <span class="dv">1310</span>,  <span class="dv">758</span>, <span class="dv">1761</span>, <span class="dv">1310</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>         <span class="dv">150</span>,  <span class="dv">320</span>,  <span class="dv">235</span>, <span class="dv">1745</span>,  <span class="dv">415</span>,  <span class="dv">329</span>, <span class="dv">1745</span>, <span class="dv">1788</span>, <span class="dv">1310</span>,  <span class="dv">208</span>, <span class="dv">1310</span>, <span class="dv">1310</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1029</span>,  <span class="dv">488</span>, <span class="dv">1310</span>, <span class="dv">1086</span>,  <span class="dv">433</span>, <span class="dv">1546</span>, <span class="dv">1086</span>, <span class="dv">1843</span>,  <span class="dv">150</span>, <span class="dv">1029</span>,  <span class="dv">488</span>, <span class="dv">1727</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>         <span class="dv">329</span>, <span class="dv">1809</span>, <span class="dv">1788</span>, <span class="dv">1310</span>, <span class="dv">1745</span>, <span class="dv">1310</span>, <span class="dv">1029</span>, <span class="dv">1310</span>, <span class="dv">1086</span>,  <span class="dv">433</span>, <span class="dv">1029</span>,  <span class="dv">758</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>         <span class="dv">329</span>, <span class="dv">1793</span>,  <span class="dv">329</span>,  <span class="dv">433</span>,   <span class="dv">30</span>, <span class="dv">1745</span>,  <span class="dv">758</span>, <span class="dv">1745</span>, <span class="dv">1086</span>,  <span class="dv">595</span>,  <span class="dv">329</span>, <span class="dv">1310</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>         <span class="dv">150</span>,   <span class="dv">30</span>, <span class="dv">1310</span>,  <span class="dv">150</span>, <span class="dv">1310</span>, <span class="dv">1809</span>, <span class="dv">1029</span>,  <span class="dv">278</span>, <span class="dv">1310</span>, <span class="dv">1086</span>, <span class="dv">1843</span>,  <span class="dv">329</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>         <span class="dv">150</span>,  <span class="dv">899</span>, <span class="dv">1745</span>, <span class="dv">1310</span>,  <span class="dv">150</span>,  <span class="dv">329</span>,  <span class="dv">329</span>,  <span class="dv">755</span>, <span class="dv">1310</span>,  <span class="dv">150</span>,  <span class="dv">150</span>, <span class="dv">1761</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>         <span class="dv">755</span>,  <span class="dv">521</span>,   <span class="dv">30</span>,  <span class="dv">329</span>,  <span class="dv">433</span>,  <span class="dv">329</span>, <span class="dv">1809</span>, <span class="dv">1745</span>,  <span class="dv">758</span>,  <span class="dv">329</span>, <span class="dv">1809</span>, <span class="dv">1086</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>         <span class="dv">150</span>,  <span class="dv">500</span>, <span class="dv">1310</span>,  <span class="dv">521</span>, <span class="dv">1086</span>, <span class="dv">1745</span>,  <span class="dv">291</span>,  <span class="dv">879</span>,  <span class="dv">568</span>,  <span class="dv">521</span>, <span class="dv">1861</span>, <span class="dv">1029</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1310</span>,  <span class="dv">329</span>,  <span class="dv">433</span>,  <span class="dv">150</span>,  <span class="dv">899</span>,  <span class="dv">150</span>, <span class="dv">1745</span>, <span class="dv">1310</span>,  <span class="dv">290</span>,  <span class="dv">150</span>,  <span class="dv">329</span>,  <span class="dv">150</span>,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>         <span class="dv">150</span>,  <span class="dv">893</span>,  <span class="dv">150</span>, <span class="dv">1029</span>,  <span class="dv">150</span>, <span class="dv">1310</span>, <span class="dv">1745</span>,  <span class="dv">150</span>,  <span class="dv">329</span>,  <span class="dv">433</span>, <span class="dv">1788</span>,  <span class="dv">534</span>,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>          <span class="dv">30</span>,  <span class="dv">755</span>, <span class="dv">1310</span>,  <span class="dv">290</span>, <span class="dv">1086</span>,  <span class="dv">150</span>, <span class="dv">1029</span>, <span class="dv">1745</span>,  <span class="dv">415</span>, <span class="dv">1809</span>, <span class="dv">1029</span>,  <span class="dv">488</span>,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>         <span class="dv">150</span>, <span class="dv">1086</span>,  <span class="dv">150</span>, <span class="dv">1745</span>, <span class="dv">1788</span>, <span class="dv">1358</span>,  <span class="dv">521</span>, <span class="dv">1086</span>, <span class="dv">1745</span>, <span class="dv">1745</span>, <span class="dv">1310</span>, <span class="dv">1835</span>,</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1310</span>,  <span class="dv">150</span>, <span class="dv">1029</span>, <span class="dv">1310</span>, <span class="dv">1086</span>,  <span class="dv">150</span>, <span class="dv">1310</span>, <span class="dv">1086</span>,  <span class="dv">433</span>, <span class="dv">1310</span>, <span class="dv">1086</span>, <span class="dv">1310</span>,</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1086</span>,  <span class="dv">150</span>,  <span class="dv">534</span>, <span class="dv">1475</span>,  <span class="dv">150</span>, <span class="dv">1310</span>, <span class="dv">1086</span>,  <span class="dv">150</span>, <span class="dv">2087</span>,  <span class="dv">955</span>, <span class="dv">1310</span>,  <span class="dv">150</span>,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1086</span>,  <span class="dv">766</span>,  <span class="dv">278</span>, <span class="dv">1310</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-11" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>toks1 <span class="op">=</span> [</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">80</span>,  <span class="dv">647</span>, <span class="dv">1049</span>, <span class="dv">1491</span>, <span class="dv">1729</span>,  <span class="dv">686</span>,  <span class="dv">807</span>, <span class="dv">1732</span>, <span class="dv">1872</span>, <span class="dv">1267</span>,   <span class="dv">42</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1650</span>, <span class="dv">1464</span>, <span class="dv">1410</span>, <span class="dv">2038</span>, <span class="dv">1542</span>, <span class="dv">1115</span>, <span class="dv">1483</span>, <span class="dv">1118</span>,  <span class="dv">355</span>,  <span class="dv">722</span>, <span class="dv">1262</span>, <span class="dv">1049</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>         <span class="dv">872</span>,  <span class="dv">975</span>, <span class="dv">1348</span>, <span class="dv">1799</span>, <span class="dv">1438</span>,  <span class="dv">600</span>, <span class="dv">1592</span>,  <span class="dv">884</span>, <span class="dv">1592</span>,  <span class="dv">547</span>, <span class="dv">1258</span>, <span class="dv">1872</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>         <span class="dv">844</span>,  <span class="dv">118</span>,   <span class="dv">37</span>, <span class="dv">1875</span>, <span class="dv">1593</span>, <span class="dv">1419</span>, <span class="dv">2036</span>, <span class="dv">1737</span>,  <span class="dv">263</span>, <span class="dv">1624</span>, <span class="dv">1032</span>, <span class="dv">1879</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>         <span class="dv">695</span>, <span class="dv">1474</span>, <span class="dv">1043</span>,  <span class="dv">345</span>, <span class="dv">1487</span>,  <span class="dv">120</span>,  <span class="dv">967</span>,  <span class="dv">458</span>,  <span class="dv">599</span>, <span class="dv">1594</span>, <span class="dv">1520</span>, <span class="dv">1626</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>         <span class="dv">185</span>, <span class="dv">1435</span>, <span class="dv">1655</span>,  <span class="dv">847</span>,  <span class="dv">301</span>,  <span class="dv">894</span>, <span class="dv">1570</span>,  <span class="dv">685</span>,  <span class="dv">599</span>, <span class="dv">1594</span>, <span class="dv">1520</span>,  <span class="dv">239</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>         <span class="dv">212</span>, <span class="dv">2037</span>, <span class="dv">1326</span>, <span class="dv">1481</span>, <span class="dv">1350</span>,  <span class="dv">861</span>,  <span class="dv">304</span>,  <span class="dv">975</span>,  <span class="dv">855</span>, <span class="dv">1501</span>, <span class="dv">1647</span>, <span class="dv">1446</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="dv">2044</span>, <span class="dv">1412</span>, <span class="dv">1627</span>, <span class="dv">1613</span>, <span class="dv">1446</span>,  <span class="dv">413</span>, <span class="dv">1335</span>, <span class="dv">2022</span>, <span class="dv">1817</span>,  <span class="dv">135</span>, <span class="dv">1804</span>,  <span class="dv">695</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1566</span>,  <span class="dv">465</span>, <span class="dv">1341</span>, <span class="dv">1339</span>,  <span class="dv">127</span>,  <span class="dv">440</span>, <span class="dv">1725</span>,  <span class="dv">950</span>, <span class="dv">1975</span>,  <span class="dv">430</span>, <span class="dv">1162</span>, <span class="dv">1590</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="dv">2005</span>, <span class="dv">1569</span>,  <span class="dv">199</span>, <span class="dv">1435</span>,  <span class="dv">790</span>, <span class="dv">1640</span>, <span class="dv">1561</span>,  <span class="dv">273</span>,  <span class="dv">185</span>, <span class="dv">1134</span>, <span class="dv">1474</span>, <span class="dv">1043</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>         <span class="dv">345</span>, <span class="dv">1336</span>, <span class="dv">1649</span>,  <span class="dv">190</span>, <span class="dv">1014</span>, <span class="dv">1087</span>,   <span class="dv">69</span>, <span class="dv">1917</span>, <span class="dv">1420</span>,  <span class="dv">730</span>, <span class="dv">1006</span>, <span class="dv">1058</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>         <span class="dv">448</span>, <span class="dv">1087</span>, <span class="dv">1523</span>, <span class="dv">1330</span>, <span class="dv">1244</span>, <span class="dv">1375</span>, <span class="dv">1501</span>,  <span class="dv">828</span>, <span class="dv">1979</span>, <span class="dv">1311</span>, <span class="dv">1875</span>, <span class="dv">1593</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>         <span class="dv">872</span>, <span class="dv">1099</span>,  <span class="dv">388</span>, <span class="dv">1737</span>,  <span class="dv">141</span>, <span class="dv">1049</span>, <span class="dv">2009</span>,  <span class="dv">582</span>, <span class="dv">1940</span>, <span class="dv">1053</span>, <span class="dv">2025</span>,  <span class="dv">272</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1302</span>, <span class="dv">1267</span>, <span class="dv">1908</span>, <span class="dv">1718</span>, <span class="dv">1415</span>, <span class="dv">1014</span>,  <span class="dv">929</span>,  <span class="dv">159</span>, <span class="dv">1912</span>, <span class="dv">1343</span>, <span class="dv">1343</span>,  <span class="dv">212</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1343</span>,  <span class="dv">123</span>,  <span class="dv">200</span>, <span class="dv">2009</span>,  <span class="dv">855</span>,  <span class="dv">154</span>, <span class="dv">1339</span>,  <span class="dv">154</span>, <span class="dv">1490</span>, <span class="dv">1100</span>, <span class="dv">1760</span>,  <span class="dv">850</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1640</span>,  <span class="dv">345</span>,   <span class="dv">37</span>,    <span class="dv">7</span>, <span class="dv">1028</span>, <span class="dv">1182</span>, <span class="dv">1446</span>, <span class="dv">1487</span>, <span class="dv">1501</span>,   <span class="dv">51</span>, <span class="dv">1613</span>,  <span class="dv">354</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>         <span class="dv">273</span>, <span class="dv">1227</span>, <span class="dv">1677</span>, <span class="dv">1490</span>, <span class="dv">1062</span>, <span class="dv">1627</span>, <span class="dv">1721</span>, <span class="dv">1341</span>, <span class="dv">2017</span>, <span class="dv">1339</span>,  <span class="dv">675</span>,  <span class="dv">872</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>         <span class="dv">910</span>,  <span class="dv">441</span>,  <span class="dv">652</span>,  <span class="dv">828</span>,   <span class="dv">76</span>, <span class="dv">1150</span>,   <span class="dv">58</span>, <span class="dv">1691</span>, <span class="dv">1905</span>, <span class="dv">1595</span>, <span class="dv">1797</span>,  <span class="dv">386</span>,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>         <span class="dv">893</span>,  <span class="dv">256</span>,  <span class="dv">155</span>,  <span class="dv">212</span>, <span class="dv">1343</span>,  <span class="dv">212</span>, <span class="dv">1343</span>,   <span class="dv">45</span>, <span class="dv">1878</span>, <span class="dv">1542</span>,   <span class="dv">42</span>, <span class="dv">1400</span>,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="dv">2090</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-12" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>toks2 <span class="op">=</span> [</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">398</span>, <span class="dv">1891</span>, <span class="dv">1211</span>, <span class="dv">1801</span>, <span class="dv">1161</span>, <span class="dv">1540</span>,  <span class="dv">526</span>,  <span class="dv">405</span>,  <span class="dv">377</span>,  <span class="dv">885</span>,  <span class="dv">309</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>         <span class="dv">985</span>, <span class="dv">1836</span>,  <span class="dv">222</span>,  <span class="dv">214</span>, <span class="dv">1626</span>,  <span class="dv">901</span>, <span class="dv">1161</span>, <span class="dv">1219</span>, <span class="dv">1975</span>, <span class="dv">1198</span>, <span class="dv">1526</span>,  <span class="dv">809</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1891</span>, <span class="dv">1267</span>, <span class="dv">1563</span>,  <span class="dv">405</span>, <span class="dv">1989</span>,  <span class="dv">233</span>, <span class="dv">1541</span>,  <span class="dv">343</span>, <span class="dv">1199</span>, <span class="dv">1401</span>, <span class="dv">1098</span>,  <span class="dv">501</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>         <span class="dv">927</span>, <span class="dv">1951</span>, <span class="dv">1365</span>, <span class="dv">1029</span>, <span class="dv">1833</span>, <span class="dv">1435</span>,  <span class="dv">316</span>, <span class="dv">2021</span>,  <span class="dv">863</span>, <span class="dv">1175</span>,  <span class="dv">855</span>,  <span class="dv">278</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>         <span class="dv">925</span>, <span class="dv">1756</span>,  <span class="dv">241</span>,  <span class="dv">484</span>,  <span class="dv">617</span>,  <span class="dv">478</span>,  <span class="dv">165</span>, <span class="dv">1687</span>,  <span class="dv">158</span>, <span class="dv">1015</span>,  <span class="dv">252</span>, <span class="dv">1868</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1453</span>,  <span class="dv">253</span>,  <span class="dv">698</span>,  <span class="dv">722</span>, <span class="dv">1170</span>, <span class="dv">1888</span>, <span class="dv">1802</span>,  <span class="dv">947</span>, <span class="dv">1336</span>,  <span class="dv">692</span>, <span class="dv">1268</span>, <span class="dv">1732</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>         <span class="dv">772</span>, <span class="dv">1207</span>,  <span class="dv">597</span>, <span class="dv">1747</span>,  <span class="dv">386</span>,  <span class="dv">904</span>,  <span class="dv">850</span>,  <span class="dv">594</span>,  <span class="dv">855</span>, <span class="dv">1192</span>, <span class="dv">1668</span>, <span class="dv">1240</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1015</span>,  <span class="dv">174</span>,  <span class="dv">112</span>,  <span class="dv">118</span>,  <span class="dv">839</span>,  <span class="dv">263</span>, <span class="dv">1294</span>,  <span class="dv">239</span>,  <span class="dv">467</span>,  <span class="dv">178</span>,  <span class="dv">253</span>, <span class="dv">1577</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>         <span class="dv">547</span>, <span class="dv">1229</span>,  <span class="dv">842</span>,  <span class="dv">674</span>,  <span class="dv">662</span>,  <span class="dv">828</span>, <span class="dv">1364</span>, <span class="dv">1049</span>, <span class="dv">1318</span>,  <span class="dv">178</span>,  <span class="dv">467</span>,   <span class="dv">62</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>         <span class="dv">283</span>, <span class="dv">1935</span>, <span class="dv">1318</span>, <span class="dv">1207</span>,  <span class="dv">562</span>, <span class="dv">2007</span>,  <span class="dv">424</span>, <span class="dv">1355</span>, <span class="dv">1732</span>,  <span class="dv">647</span>, <span class="dv">1287</span>,   <span class="dv">94</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>         <span class="dv">281</span>, <span class="dv">1217</span>, <span class="dv">1936</span>,  <span class="dv">343</span>,  <span class="dv">851</span>, <span class="dv">1487</span>, <span class="dv">2062</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-13" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>toks2 <span class="op">=</span> [</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">290</span>, <span class="dv">1725</span>,  <span class="dv">936</span>,  <span class="dv">743</span>,  <span class="dv">574</span>,  <span class="dv">381</span>,  <span class="dv">599</span>, <span class="dv">1005</span>,  <span class="dv">799</span>, <span class="dv">1129</span>,   <span class="dv">86</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>         <span class="dv">966</span>, <span class="dv">1436</span>,  <span class="dv">778</span>, <span class="dv">2000</span>,  <span class="dv">140</span>, <span class="dv">1571</span>, <span class="dv">2014</span>, <span class="dv">1680</span>, <span class="dv">1091</span>,  <span class="dv">364</span>,  <span class="dv">236</span>,  <span class="dv">270</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1136</span>,  <span class="dv">803</span>,  <span class="dv">648</span>,   <span class="dv">81</span>,  <span class="dv">315</span>, <span class="dv">1021</span>, <span class="dv">1954</span>, <span class="dv">1660</span>,  <span class="dv">474</span>, <span class="dv">1440</span>, <span class="dv">1043</span>,  <span class="dv">898</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1528</span>,  <span class="dv">381</span>,  <span class="dv">407</span>,  <span class="dv">407</span>, <span class="dv">1431</span>,  <span class="dv">192</span>,  <span class="dv">921</span>, <span class="dv">1636</span>, <span class="dv">1847</span>,   <span class="dv">17</span>,  <span class="dv">177</span>,  <span class="dv">969</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1725</span>,  <span class="dv">140</span>, <span class="dv">1945</span>, <span class="dv">1596</span>,  <span class="dv">925</span>, <span class="dv">1986</span>, <span class="dv">1967</span>,  <span class="dv">648</span>, <span class="dv">1991</span>, <span class="dv">1400</span>,  <span class="dv">523</span>,  <span class="dv">157</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>         <span class="dv">601</span>,  <span class="dv">342</span>,  <span class="dv">321</span>, <span class="dv">1914</span>, <span class="dv">1890</span>,  <span class="dv">342</span>,  <span class="dv">504</span>,  <span class="dv">623</span>,  <span class="dv">221</span>, <span class="dv">1244</span>,  <span class="dv">379</span>,   <span class="dv">86</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>         <span class="dv">131</span>,  <span class="dv">224</span>,   <span class="dv">24</span>,  <span class="dv">585</span>,  <span class="dv">729</span>, <span class="dv">1880</span>, <span class="dv">1044</span>, <span class="dv">1287</span>,  <span class="dv">624</span>, <span class="dv">1145</span>, <span class="dv">1484</span>, <span class="dv">1355</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>         <span class="dv">435</span>,   <span class="dv">24</span>,  <span class="dv">537</span>,   <span class="dv">86</span>, <span class="dv">1027</span>, <span class="dv">1332</span>, <span class="dv">1037</span>,   <span class="dv">69</span>, <span class="dv">1254</span>, <span class="dv">1257</span>,  <span class="dv">165</span>,  <span class="dv">946</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>          <span class="dv">55</span>,  <span class="dv">601</span>,  <span class="dv">485</span>,  <span class="dv">168</span>,  <span class="dv">771</span>, <span class="dv">2028</span>, <span class="dv">1195</span>, <span class="dv">1389</span>,  <span class="dv">589</span>, <span class="dv">1725</span>,  <span class="dv">986</span>, <span class="dv">1805</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1156</span>,  <span class="dv">192</span>,  <span class="dv">894</span>, <span class="dv">1117</span>,  <span class="dv">506</span>,  <span class="dv">321</span>, <span class="dv">1175</span>, <span class="dv">1255</span>,  <span class="dv">232</span>, <span class="dv">1351</span>, <span class="dv">1363</span>, <span class="dv">1204</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>          <span class="dv">87</span>,  <span class="dv">525</span>, <span class="dv">1541</span>, <span class="dv">1931</span>, <span class="dv">2006</span>,  <span class="dv">856</span>,  <span class="dv">301</span>, <span class="dv">1557</span>,  <span class="dv">808</span>,  <span class="dv">146</span>,  <span class="dv">815</span>, <span class="dv">1210</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>         <span class="dv">341</span>,  <span class="dv">713</span>,  <span class="dv">255</span>,  <span class="dv">959</span>,  <span class="dv">813</span>,  <span class="dv">376</span>,  <span class="dv">616</span>, <span class="dv">1485</span>, <span class="dv">1738</span>,  <span class="dv">584</span>,  <span class="dv">893</span>,  <span class="dv">629</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>         <span class="dv">804</span>, <span class="dv">1897</span>, <span class="dv">1294</span>, <span class="dv">1617</span>,  <span class="dv">370</span>, <span class="dv">1175</span>,  <span class="dv">363</span>,  <span class="dv">643</span>, <span class="dv">1439</span>, <span class="dv">2096</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-14" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>toks2 <span class="op">=</span> [</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">290</span>, <span class="dv">1627</span>,  <span class="dv">815</span>,  <span class="dv">434</span>, <span class="dv">1528</span>, <span class="dv">1634</span>, <span class="dv">1223</span>,  <span class="dv">818</span>, <span class="dv">1914</span>, <span class="dv">1303</span>,  <span class="dv">349</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>         <span class="dv">770</span>, <span class="dv">1683</span>,  <span class="dv">648</span>, <span class="dv">1654</span>,  <span class="dv">649</span>,  <span class="dv">254</span>,  <span class="dv">903</span>, <span class="dv">1203</span>, <span class="dv">1950</span>, <span class="dv">1531</span>, <span class="dv">1094</span>, <span class="dv">1449</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>          <span class="dv">59</span>,  <span class="dv">614</span>,  <span class="dv">370</span>,  <span class="dv">980</span>,  <span class="dv">741</span>,  <span class="dv">563</span>,   <span class="dv">12</span>, <span class="dv">1739</span>, <span class="dv">1537</span>, <span class="dv">1620</span>,   <span class="dv">11</span>,  <span class="dv">463</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1605</span>, <span class="dv">1518</span>,  <span class="dv">364</span>, <span class="dv">1562</span>, <span class="dv">1739</span>, <span class="dv">1038</span>, <span class="dv">1976</span>, <span class="dv">1356</span>, <span class="dv">1530</span>,   <span class="dv">12</span>, <span class="dv">1734</span>,  <span class="dv">792</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1181</span>,  <span class="dv">134</span>,  <span class="dv">426</span>, <span class="dv">1990</span>, <span class="dv">2029</span>, <span class="dv">1348</span>, <span class="dv">1785</span>,  <span class="dv">471</span>,  <span class="dv">171</span>,  <span class="dv">804</span>,  <span class="dv">589</span>,  <span class="dv">811</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1108</span>,  <span class="dv">563</span>, <span class="dv">1947</span>,  <span class="dv">712</span>, <span class="dv">1976</span>, <span class="dv">1502</span>,  <span class="dv">537</span>, <span class="dv">1748</span>, <span class="dv">1785</span>, <span class="dv">1487</span>, <span class="dv">1986</span>, <span class="dv">1512</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1006</span>, <span class="dv">1005</span>,  <span class="dv">342</span>, <span class="dv">1511</span>, <span class="dv">1962</span>, <span class="dv">1292</span>,  <span class="dv">858</span>,  <span class="dv">246</span>, <span class="dv">1943</span>, <span class="dv">1540</span>, <span class="dv">1198</span>, <span class="dv">1623</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>         <span class="dv">876</span>, <span class="dv">1540</span>,  <span class="dv">622</span>, <span class="dv">1321</span>,  <span class="dv">884</span>, <span class="dv">1010</span>,  <span class="dv">255</span>,  <span class="dv">295</span>,  <span class="dv">627</span>, <span class="dv">1367</span>, <span class="dv">1003</span>, <span class="dv">1585</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1701</span>, <span class="dv">1185</span>, <span class="dv">1175</span>,  <span class="dv">232</span>, <span class="dv">1601</span>,  <span class="dv">818</span>,  <span class="dv">474</span>, <span class="dv">1390</span>,  <span class="dv">624</span>, <span class="dv">1634</span>, <span class="dv">1261</span>,  <span class="dv">379</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>         <span class="dv">108</span>, <span class="dv">1893</span>, <span class="dv">1793</span>, <span class="dv">1077</span>, <span class="dv">1693</span>,  <span class="dv">829</span>, <span class="dv">1966</span>,  <span class="dv">192</span>, <span class="dv">1145</span>, <span class="dv">1542</span>,  <span class="dv">779</span>, <span class="dv">1084</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>         <span class="dv">452</span>,  <span class="dv">556</span>,  <span class="dv">643</span>, <span class="dv">1116</span>, <span class="dv">1951</span>,  <span class="dv">265</span>,  <span class="dv">394</span>,  <span class="dv">157</span>, <span class="dv">1900</span>, <span class="dv">1945</span>, <span class="dv">1277</span>, <span class="dv">1966</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1542</span>, <span class="dv">1614</span>, <span class="dv">1951</span>, <span class="dv">1470</span>,  <span class="dv">672</span>, <span class="dv">1790</span>,   <span class="dv">86</span>,  <span class="dv">380</span>, <span class="dv">1245</span>, <span class="dv">1449</span>,  <span class="dv">379</span>,  <span class="dv">831</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1409</span>, <span class="dv">1824</span>, <span class="dv">1955</span>,  <span class="dv">379</span>, <span class="dv">1003</span>,   <span class="dv">55</span>, <span class="dv">1084</span>,  <span class="dv">452</span>,  <span class="dv">208</span>, <span class="dv">1972</span>,  <span class="dv">847</span>, <span class="dv">1151</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>         <span class="dv">585</span>,  <span class="dv">560</span>, <span class="dv">1227</span>,  <span class="dv">648</span>,  <span class="dv">537</span>, <span class="dv">1175</span>, <span class="dv">1477</span>, <span class="dv">1614</span>,  <span class="dv">324</span>,  <span class="dv">384</span>,  <span class="dv">272</span>,  <span class="dv">574</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1448</span>,  <span class="dv">422</span>,  <span class="dv">771</span>,  <span class="dv">992</span>, <span class="dv">1255</span>, <span class="dv">1150</span>, <span class="dv">1391</span>,  <span class="dv">617</span>, <span class="dv">1400</span>,  <span class="dv">304</span>, <span class="dv">1998</span>,  <span class="dv">997</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1735</span>, <span class="dv">1337</span>, <span class="dv">1712</span>,  <span class="dv">402</span>, <span class="dv">2090</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-18" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># toks2 = [290, 1725,  936,  743,  574,  381,  599, 1005]</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>toks2 <span class="op">=</span> [</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">56</span>,  <span class="dv">562</span>, <span class="dv">1168</span>,  <span class="dv">728</span>,  <span class="dv">915</span>,  <span class="dv">323</span>, <span class="dv">1184</span>,  <span class="dv">572</span>, <span class="dv">1375</span>,  <span class="dv">598</span>,  <span class="dv">765</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1375</span>, <span class="dv">1317</span>, <span class="dv">1761</span>,   <span class="dv">79</span>, <span class="dv">1028</span>,  <span class="dv">219</span>, <span class="dv">1719</span>,  <span class="dv">733</span>,  <span class="dv">226</span>, <span class="dv">1872</span>,  <span class="dv">531</span>, <span class="dv">1142</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1977</span>, <span class="dv">1450</span>,   <span class="dv">79</span>, <span class="dv">1753</span>,  <span class="dv">628</span>,  <span class="dv">694</span>, <span class="dv">1670</span>, <span class="dv">1071</span>,  <span class="dv">612</span>,   <span class="dv">79</span>, <span class="dv">1630</span>,  <span class="dv">754</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>         <span class="dv">301</span>,  <span class="dv">172</span>, <span class="dv">1548</span>, <span class="dv">1339</span>,  <span class="dv">179</span>, <span class="dv">1188</span>,  <span class="dv">633</span>,  <span class="dv">707</span>, <span class="dv">1339</span>, <span class="dv">1816</span>,  <span class="dv">695</span>, <span class="dv">1235</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1053</span>,  <span class="dv">602</span>, <span class="dv">1465</span>,  <span class="dv">802</span>, <span class="dv">1872</span>,  <span class="dv">553</span>, <span class="dv">1521</span>, <span class="dv">1592</span>, <span class="dv">1393</span>, <span class="dv">1137</span>, <span class="dv">1492</span>,   <span class="dv">60</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1067</span>,  <span class="dv">805</span>, <span class="dv">1951</span>,  <span class="dv">274</span>,  <span class="dv">596</span>, <span class="dv">1457</span>,  <span class="dv">473</span>, <span class="dv">2009</span>, <span class="dv">1078</span>, <span class="dv">2025</span>,  <span class="dv">388</span>, <span class="dv">1193</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>         <span class="dv">362</span>, <span class="dv">1801</span>, <span class="dv">1853</span>, <span class="dv">1296</span>, <span class="dv">1493</span>,  <span class="dv">110</span>,  <span class="dv">643</span>,  <span class="dv">338</span>, <span class="dv">1147</span>, <span class="dv">1503</span>, <span class="dv">1687</span>,  <span class="dv">536</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1045</span>,  <span class="dv">760</span>,  <span class="dv">647</span>, <span class="dv">1365</span>, <span class="dv">1600</span>, <span class="dv">1900</span>,  <span class="dv">243</span>,  <span class="dv">622</span>,  <span class="dv">237</span>,   <span class="dv">18</span>, <span class="dv">2032</span>,  <span class="dv">304</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1503</span>, <span class="dv">1342</span>,    <span class="dv">8</span>, <span class="dv">1238</span>,  <span class="dv">650</span>, <span class="dv">1183</span>,  <span class="dv">969</span>,  <span class="dv">185</span>, <span class="dv">1067</span>,   <span class="dv">74</span>, <span class="dv">1155</span>,  <span class="dv">469</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>         <span class="dv">836</span>, <span class="dv">1459</span>, <span class="dv">1606</span>, <span class="dv">1481</span>, <span class="dv">1850</span>, <span class="dv">1475</span>,  <span class="dv">914</span>,  <span class="dv">297</span>,  <span class="dv">713</span>,  <span class="dv">671</span>,  <span class="dv">600</span>,  <span class="dv">815</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>          <span class="dv">58</span>, <span class="dv">2036</span>, <span class="dv">1867</span>,  <span class="dv">193</span>,  <span class="dv">970</span>,  <span class="dv">543</span>,  <span class="dv">590</span>,  <span class="dv">612</span>, <span class="dv">1768</span>, <span class="dv">1417</span>, <span class="dv">1882</span>, <span class="dv">1061</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1474</span>,  <span class="dv">161</span>, <span class="dv">1764</span>, <span class="dv">1998</span>, <span class="dv">1229</span>,  <span class="dv">522</span>, <span class="dv">1402</span>,  <span class="dv">279</span>,  <span class="dv">668</span>, <span class="dv">2037</span>,  <span class="dv">438</span>,  <span class="dv">233</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1086</span>, <span class="dv">2016</span>,  <span class="dv">915</span>,  <span class="dv">683</span>,  <span class="dv">564</span>,  <span class="dv">412</span>, <span class="dv">1555</span>,  <span class="dv">407</span>, <span class="dv">1326</span>, <span class="dv">1784</span>, <span class="dv">1450</span>,  <span class="dv">409</span>,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1025</span>,  <span class="dv">517</span>, <span class="dv">1778</span>,  <span class="dv">498</span>, <span class="dv">1519</span>,  <span class="dv">728</span>,  <span class="dv">990</span>, <span class="dv">1575</span>,  <span class="dv">469</span>,  <span class="dv">610</span>, <span class="dv">2039</span>, <span class="dv">1678</span>,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>         <span class="dv">299</span>, <span class="dv">1810</span>,   <span class="dv">20</span>, <span class="dv">1125</span>,  <span class="dv">161</span>, <span class="dv">1921</span>,  <span class="dv">751</span>, <span class="dv">2027</span>, <span class="dv">1779</span>, <span class="dv">1230</span>, <span class="dv">2037</span>, <span class="dv">1083</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1148</span>,  <span class="dv">339</span>, <span class="dv">2009</span>, <span class="dv">1938</span>, <span class="dv">2039</span>,  <span class="dv">395</span>, <span class="dv">1639</span>,  <span class="dv">975</span>, <span class="dv">1548</span>, <span class="dv">2032</span>, <span class="dv">1630</span>,   <span class="dv">79</span>,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>         <span class="dv">667</span>, <span class="dv">1554</span>, <span class="dv">1867</span>,  <span class="dv">439</span>,  <span class="dv">872</span>,  <span class="dv">474</span>,  <span class="dv">658</span>, <span class="dv">1893</span>, <span class="dv">1029</span>,  <span class="dv">193</span>,  <span class="dv">168</span>, <span class="dv">1308</span>,</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1844</span>,  <span class="dv">650</span>, <span class="dv">1545</span>,  <span class="dv">251</span>,  <span class="dv">325</span>, <span class="dv">1515</span>, <span class="dv">1839</span>,  <span class="dv">460</span>, <span class="dv">1350</span>, <span class="dv">1427</span>,  <span class="dv">355</span>, <span class="dv">1878</span>,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1609</span>, <span class="dv">1537</span>, <span class="dv">1692</span>,  <span class="dv">304</span>,  <span class="dv">301</span>, <span class="dv">1928</span>, <span class="dv">1289</span>,  <span class="dv">164</span>, <span class="dv">1545</span>,  <span class="dv">156</span>, <span class="dv">1213</span>,  <span class="dv">540</span>,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>         <span class="dv">193</span>,  <span class="dv">766</span>, <span class="dv">2088</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-19" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>toks2 <span class="op">=</span> [</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">56</span>,  <span class="dv">562</span>, <span class="dv">1168</span>,  <span class="dv">728</span>,  <span class="dv">915</span>,  <span class="dv">323</span>, <span class="dv">1184</span>,  <span class="dv">572</span>, <span class="dv">1375</span>,  <span class="dv">598</span>,  <span class="dv">765</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1375</span>, <span class="dv">1317</span>, <span class="dv">1761</span>,   <span class="dv">79</span>, <span class="dv">1028</span>,  <span class="dv">219</span>, <span class="dv">1719</span>,  <span class="dv">733</span>,  <span class="dv">226</span>, <span class="dv">1872</span>,  <span class="dv">531</span>, <span class="dv">1142</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1977</span>, <span class="dv">1450</span>,   <span class="dv">79</span>, <span class="dv">1753</span>,  <span class="dv">628</span>,  <span class="dv">694</span>, <span class="dv">1670</span>, <span class="dv">1071</span>,  <span class="dv">612</span>,   <span class="dv">79</span>, <span class="dv">1630</span>,  <span class="dv">754</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>         <span class="dv">301</span>,  <span class="dv">172</span>, <span class="dv">1548</span>, <span class="dv">1339</span>,  <span class="dv">179</span>, <span class="dv">1188</span>,  <span class="dv">633</span>,  <span class="dv">707</span>, <span class="dv">1339</span>, <span class="dv">1816</span>,  <span class="dv">695</span>, <span class="dv">1235</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1053</span>,  <span class="dv">602</span>, <span class="dv">1465</span>,  <span class="dv">802</span>, <span class="dv">1872</span>,  <span class="dv">553</span>, <span class="dv">1521</span>, <span class="dv">1592</span>, <span class="dv">1393</span>, <span class="dv">1137</span>, <span class="dv">1492</span>,   <span class="dv">60</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1067</span>,  <span class="dv">805</span>, <span class="dv">1951</span>,  <span class="dv">274</span>,  <span class="dv">596</span>, <span class="dv">1457</span>,  <span class="dv">473</span>, <span class="dv">2009</span>, <span class="dv">1078</span>, <span class="dv">2025</span>,  <span class="dv">388</span>, <span class="dv">1193</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>         <span class="dv">362</span>, <span class="dv">1801</span>, <span class="dv">1853</span>, <span class="dv">1296</span>, <span class="dv">1493</span>,  <span class="dv">110</span>,  <span class="dv">643</span>,  <span class="dv">338</span>, <span class="dv">1147</span>, <span class="dv">1503</span>, <span class="dv">1687</span>,  <span class="dv">536</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1045</span>,  <span class="dv">760</span>,  <span class="dv">647</span>, <span class="dv">1365</span>, <span class="dv">1600</span>, <span class="dv">1900</span>,  <span class="dv">243</span>,  <span class="dv">622</span>,  <span class="dv">237</span>,   <span class="dv">18</span>, <span class="dv">2032</span>,  <span class="dv">304</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1503</span>, <span class="dv">1342</span>,    <span class="dv">8</span>, <span class="dv">1238</span>,  <span class="dv">650</span>, <span class="dv">1183</span>,  <span class="dv">969</span>,  <span class="dv">185</span>, <span class="dv">1067</span>,   <span class="dv">74</span>, <span class="dv">1155</span>,  <span class="dv">469</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>         <span class="dv">836</span>, <span class="dv">1459</span>, <span class="dv">1606</span>, <span class="dv">1481</span>, <span class="dv">1850</span>, <span class="dv">1475</span>,  <span class="dv">914</span>,  <span class="dv">297</span>,  <span class="dv">713</span>,  <span class="dv">671</span>,  <span class="dv">600</span>,  <span class="dv">815</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>          <span class="dv">58</span>, <span class="dv">2036</span>, <span class="dv">1867</span>,  <span class="dv">193</span>,  <span class="dv">970</span>,  <span class="dv">543</span>,  <span class="dv">590</span>,  <span class="dv">612</span>, <span class="dv">1768</span>, <span class="dv">1417</span>, <span class="dv">1882</span>, <span class="dv">1061</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1474</span>,  <span class="dv">161</span>, <span class="dv">1764</span>, <span class="dv">1998</span>, <span class="dv">1229</span>,  <span class="dv">522</span>, <span class="dv">1402</span>,  <span class="dv">279</span>,  <span class="dv">668</span>, <span class="dv">2037</span>,  <span class="dv">438</span>,  <span class="dv">233</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1086</span>, <span class="dv">2016</span>,  <span class="dv">915</span>,  <span class="dv">683</span>,  <span class="dv">564</span>,  <span class="dv">412</span>, <span class="dv">1555</span>,  <span class="dv">407</span>, <span class="dv">1326</span>, <span class="dv">1784</span>, <span class="dv">1450</span>,  <span class="dv">409</span>,</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1025</span>,  <span class="dv">517</span>, <span class="dv">1778</span>,  <span class="dv">498</span>, <span class="dv">1519</span>,  <span class="dv">728</span>,  <span class="dv">990</span>, <span class="dv">1575</span>,  <span class="dv">469</span>,  <span class="dv">610</span>, <span class="dv">2039</span>, <span class="dv">1678</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>         <span class="dv">299</span>, <span class="dv">1810</span>,   <span class="dv">20</span>, <span class="dv">1125</span>,  <span class="dv">161</span>, <span class="dv">1921</span>,  <span class="dv">751</span>, <span class="dv">2027</span>, <span class="dv">1779</span>, <span class="dv">1230</span>, <span class="dv">2037</span>, <span class="dv">1083</span>,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1148</span>,  <span class="dv">339</span>, <span class="dv">2009</span>, <span class="dv">1938</span>, <span class="dv">2039</span>,  <span class="dv">395</span>, <span class="dv">1639</span>,  <span class="dv">975</span>, <span class="dv">1548</span>, <span class="dv">2032</span>, <span class="dv">1630</span>,   <span class="dv">79</span>,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>         <span class="dv">667</span>, <span class="dv">1554</span>, <span class="dv">1867</span>,  <span class="dv">439</span>,  <span class="dv">872</span>,  <span class="dv">474</span>,  <span class="dv">658</span>, <span class="dv">1893</span>, <span class="dv">1029</span>,  <span class="dv">193</span>,  <span class="dv">168</span>, <span class="dv">1308</span>,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1844</span>,  <span class="dv">650</span>, <span class="dv">1545</span>,  <span class="dv">251</span>,  <span class="dv">325</span>, <span class="dv">1515</span>, <span class="dv">1839</span>,  <span class="dv">460</span>, <span class="dv">1350</span>, <span class="dv">1427</span>,  <span class="dv">355</span>, <span class="dv">1878</span>,</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1609</span>, <span class="dv">1537</span>, <span class="dv">1692</span>,  <span class="dv">304</span>,  <span class="dv">301</span>, <span class="dv">1928</span>, <span class="dv">1289</span>,  <span class="dv">164</span>, <span class="dv">1545</span>,  <span class="dv">156</span>, <span class="dv">1213</span>,  <span class="dv">540</span>,</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>         <span class="dv">193</span>,  <span class="dv">766</span>, <span class="dv">2088</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-20" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>toks2 <span class="op">=</span> [</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">398</span>, <span class="dv">1970</span>, <span class="dv">1645</span>, <span class="dv">1757</span>,  <span class="dv">845</span>,  <span class="dv">145</span>, <span class="dv">1987</span>,  <span class="dv">975</span>, <span class="dv">1166</span>, <span class="dv">1306</span>,  <span class="dv">715</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>          <span class="dv">87</span>,  <span class="dv">166</span>,   <span class="dv">84</span>,  <span class="dv">701</span>,  <span class="dv">225</span>, <span class="dv">1972</span>,  <span class="dv">617</span>, <span class="dv">2024</span>, <span class="dv">1610</span>, <span class="dv">1876</span>,  <span class="dv">702</span>,  <span class="dv">430</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1944</span>,  <span class="dv">104</span>, <span class="dv">1226</span>,  <span class="dv">885</span>, <span class="dv">1763</span>, <span class="dv">1294</span>,  <span class="dv">119</span>,  <span class="dv">418</span>, <span class="dv">1194</span>,  <span class="dv">306</span>, <span class="dv">1484</span>, <span class="dv">1201</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1355</span>, <span class="dv">1404</span>,   <span class="dv">40</span>, <span class="dv">1787</span>,  <span class="dv">274</span>, <span class="dv">1787</span>, <span class="dv">1536</span>, <span class="dv">1447</span>,  <span class="dv">966</span>, <span class="dv">1404</span>, <span class="dv">1219</span>,   <span class="dv">61</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>          <span class="dv">99</span>, <span class="dv">1944</span>,  <span class="dv">685</span>, <span class="dv">1226</span>, <span class="dv">1833</span>,  <span class="dv">808</span>,  <span class="dv">685</span>, <span class="dv">1613</span>, <span class="dv">1595</span>,  <span class="dv">966</span>,  <span class="dv">903</span>,   <span class="dv">99</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>         <span class="dv">944</span>,  <span class="dv">407</span>,  <span class="dv">702</span>,   <span class="dv">14</span>,  <span class="dv">178</span>, <span class="dv">1147</span>, <span class="dv">1139</span>, <span class="dv">1400</span>,  <span class="dv">307</span>,  <span class="dv">130</span>, <span class="dv">1764</span>, <span class="dv">1660</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1607</span>,  <span class="dv">313</span>,  <span class="dv">288</span>, <span class="dv">1488</span>, <span class="dv">1686</span>, <span class="dv">1074</span>, <span class="dv">1170</span>, <span class="dv">1035</span>,  <span class="dv">283</span>,  <span class="dv">278</span>,  <span class="dv">617</span>, <span class="dv">1755</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>         <span class="dv">568</span>,  <span class="dv">488</span>,  <span class="dv">418</span>,  <span class="dv">502</span>,   <span class="dv">16</span>, <span class="dv">1710</span>, <span class="dv">1704</span>,  <span class="dv">627</span>, <span class="dv">1025</span>,  <span class="dv">988</span>, <span class="dv">1371</span>,  <span class="dv">502</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>         <span class="dv">932</span>,  <span class="dv">439</span>, <span class="dv">1991</span>,  <span class="dv">480</span>, <span class="dv">1973</span>, <span class="dv">1441</span>, <span class="dv">1488</span>,  <span class="dv">475</span>,  <span class="dv">241</span>, <span class="dv">1005</span>,  <span class="dv">988</span>, <span class="dv">1598</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>         <span class="dv">905</span>,  <span class="dv">698</span>, <span class="dv">1901</span>, <span class="dv">1569</span>,  <span class="dv">616</span>,  <span class="dv">463</span>, <span class="dv">1940</span>, <span class="dv">1432</span>, <span class="dv">1868</span>,  <span class="dv">944</span>,  <span class="dv">544</span>, <span class="dv">1059</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="dv">2030</span>, <span class="dv">1887</span>,   <span class="dv">19</span>,  <span class="dv">779</span>, <span class="dv">1763</span>, <span class="dv">1879</span>, <span class="dv">1281</span>, <span class="dv">1504</span>, <span class="dv">1373</span>, <span class="dv">1043</span>, <span class="dv">1826</span>,   <span class="dv">40</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>         <span class="dv">616</span>, <span class="dv">1177</span>,  <span class="dv">158</span>,  <span class="dv">119</span>,  <span class="dv">225</span>,  <span class="dv">740</span>,  <span class="dv">793</span>,  <span class="dv">698</span>,  <span class="dv">905</span>,  <span class="dv">881</span>, <span class="dv">1422</span>,   <span class="dv">68</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1750</span>,  <span class="dv">698</span>,  <span class="dv">709</span>, <span class="dv">1815</span>,  <span class="dv">307</span>,  <span class="dv">954</span>, <span class="dv">1907</span>,  <span class="dv">697</span>,   <span class="dv">40</span>, <span class="dv">1292</span>, <span class="dv">1787</span>, <span class="dv">1447</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1441</span>, <span class="dv">1070</span>, <span class="dv">1197</span>, <span class="dv">1219</span>, <span class="dv">1958</span>,  <span class="dv">906</span>,  <span class="dv">513</span>,  <span class="dv">186</span>,   <span class="dv">87</span>,  <span class="dv">960</span>,  <span class="dv">938</span>, <span class="dv">1360</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1944</span>,   <span class="dv">18</span>,  <span class="dv">404</span>,  <span class="dv">778</span>,  <span class="dv">740</span>,  <span class="dv">663</span>, <span class="dv">2030</span>, <span class="dv">2042</span>, <span class="dv">1710</span>, <span class="dv">1178</span>,  <span class="dv">222</span>,  <span class="dv">627</span>,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>          <span class="dv">99</span>, <span class="dv">1947</span>,  <span class="dv">361</span>,  <span class="dv">444</span>, <span class="dv">1470</span>,  <span class="dv">283</span>,   <span class="dv">84</span>,  <span class="dv">517</span>, <span class="dv">1973</span>,  <span class="dv">815</span>,  <span class="dv">553</span>,  <span class="dv">104</span>,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1660</span>,  <span class="dv">988</span>,  <span class="dv">636</span>,  <span class="dv">836</span>, <span class="dv">1294</span>, <span class="dv">1698</span>,  <span class="dv">634</span>, <span class="dv">1064</span>, <span class="dv">1292</span>, <span class="dv">1046</span>, <span class="dv">1580</span>,  <span class="dv">634</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1515</span>,  <span class="dv">225</span>, <span class="dv">1633</span>, <span class="dv">1242</span>, <span class="dv">1897</span>, <span class="dv">1180</span>, <span class="dv">1217</span>, <span class="dv">1702</span>, <span class="dv">1884</span>,  <span class="dv">881</span>,  <span class="dv">439</span>,  <span class="dv">709</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1675</span>, <span class="dv">1292</span>, <span class="dv">1474</span>,  <span class="dv">345</span>, <span class="dv">1927</span>,  <span class="dv">184</span>,  <span class="dv">698</span>, <span class="dv">1771</span>,  <span class="dv">666</span>,  <span class="dv">462</span>, <span class="dv">1978</span>,  <span class="dv">176</span>,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>        <span class="dv">2012</span>, <span class="dv">1676</span>,   <span class="dv">40</span>, <span class="dv">1040</span>,  <span class="dv">616</span>, <span class="dv">1973</span>,  <span class="dv">372</span>, <span class="dv">1970</span>,  <span class="dv">839</span>,  <span class="dv">222</span>, <span class="dv">1373</span>,  <span class="dv">493</span>,</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>          <span class="dv">18</span>, <span class="dv">1043</span>, <span class="dv">1441</span>, <span class="dv">1320</span>, <span class="dv">1219</span>, <span class="dv">2089</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-21" class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>toks2 <span class="op">=</span> [<span class="dv">398</span>, <span class="dv">1970</span>, <span class="dv">1645</span>, <span class="dv">1757</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>toks2 <span class="op">=</span> [</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">398</span>, <span class="dv">1970</span>, <span class="dv">1645</span>, <span class="dv">1757</span>,  <span class="dv">845</span>,  <span class="dv">145</span>, <span class="dv">1987</span>,  <span class="dv">975</span>, <span class="dv">1166</span>, <span class="dv">1306</span>,  <span class="dv">715</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>          <span class="dv">87</span>,  <span class="dv">166</span>,   <span class="dv">84</span>,  <span class="dv">701</span>,  <span class="dv">225</span>, <span class="dv">1972</span>,  <span class="dv">617</span>, <span class="dv">2024</span>, <span class="dv">1610</span>, <span class="dv">1876</span>,  <span class="dv">702</span>,  <span class="dv">430</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1944</span>,  <span class="dv">104</span>, <span class="dv">1226</span>,  <span class="dv">885</span>, <span class="dv">1763</span>, <span class="dv">1294</span>,  <span class="dv">119</span>,  <span class="dv">418</span>, <span class="dv">1194</span>,  <span class="dv">306</span>, <span class="dv">1484</span>, <span class="dv">1201</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1355</span>, <span class="dv">1404</span>,   <span class="dv">40</span>, <span class="dv">1787</span>,  <span class="dv">274</span>, <span class="dv">1787</span>, <span class="dv">1536</span>, <span class="dv">1447</span>,  <span class="dv">966</span>, <span class="dv">1404</span>, <span class="dv">1219</span>,   <span class="dv">61</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>          <span class="dv">99</span>, <span class="dv">1944</span>,  <span class="dv">685</span>, <span class="dv">1226</span>, <span class="dv">1833</span>,  <span class="dv">808</span>,  <span class="dv">685</span>, <span class="dv">1613</span>, <span class="dv">1595</span>,  <span class="dv">966</span>,  <span class="dv">903</span>,   <span class="dv">99</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>         <span class="dv">944</span>,  <span class="dv">407</span>,  <span class="dv">702</span>,   <span class="dv">14</span>,  <span class="dv">178</span>, <span class="dv">1147</span>, <span class="dv">1139</span>, <span class="dv">1400</span>,  <span class="dv">307</span>,  <span class="dv">130</span>, <span class="dv">1764</span>, <span class="dv">1660</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1607</span>,  <span class="dv">313</span>,  <span class="dv">288</span>, <span class="dv">1488</span>, <span class="dv">1686</span>, <span class="dv">1074</span>, <span class="dv">1170</span>, <span class="dv">1035</span>,  <span class="dv">283</span>,  <span class="dv">278</span>,  <span class="dv">617</span>, <span class="dv">1755</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>         <span class="dv">568</span>,  <span class="dv">488</span>,  <span class="dv">418</span>,  <span class="dv">502</span>,   <span class="dv">16</span>, <span class="dv">1710</span>, <span class="dv">1704</span>,  <span class="dv">627</span>, <span class="dv">1025</span>,  <span class="dv">988</span>, <span class="dv">1371</span>,  <span class="dv">502</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>         <span class="dv">932</span>,  <span class="dv">439</span>, <span class="dv">1991</span>,  <span class="dv">480</span>, <span class="dv">1973</span>, <span class="dv">1441</span>, <span class="dv">1488</span>,  <span class="dv">475</span>,  <span class="dv">241</span>, <span class="dv">1005</span>,  <span class="dv">988</span>, <span class="dv">1598</span>,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>         <span class="dv">905</span>,  <span class="dv">698</span>, <span class="dv">1901</span>, <span class="dv">1569</span>,  <span class="dv">616</span>,  <span class="dv">463</span>, <span class="dv">1940</span>, <span class="dv">1432</span>, <span class="dv">1868</span>,  <span class="dv">944</span>,  <span class="dv">544</span>, <span class="dv">1059</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        <span class="dv">2030</span>, <span class="dv">1887</span>,   <span class="dv">19</span>,  <span class="dv">779</span>, <span class="dv">1763</span>, <span class="dv">1879</span>, <span class="dv">1281</span>, <span class="dv">1504</span>, <span class="dv">1373</span>, <span class="dv">1043</span>, <span class="dv">1826</span>,   <span class="dv">40</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>         <span class="dv">616</span>, <span class="dv">1177</span>,  <span class="dv">158</span>,  <span class="dv">119</span>,  <span class="dv">225</span>,  <span class="dv">740</span>,  <span class="dv">793</span>,  <span class="dv">698</span>,  <span class="dv">905</span>,  <span class="dv">881</span>, <span class="dv">1422</span>,   <span class="dv">68</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1750</span>,  <span class="dv">698</span>,  <span class="dv">709</span>, <span class="dv">1815</span>,  <span class="dv">307</span>,  <span class="dv">954</span>, <span class="dv">1907</span>,  <span class="dv">697</span>,   <span class="dv">40</span>, <span class="dv">1292</span>, <span class="dv">1787</span>, <span class="dv">1447</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1441</span>, <span class="dv">1070</span>, <span class="dv">1197</span>, <span class="dv">1219</span>, <span class="dv">1958</span>,  <span class="dv">906</span>,  <span class="dv">513</span>,  <span class="dv">186</span>,   <span class="dv">87</span>,  <span class="dv">960</span>,  <span class="dv">938</span>, <span class="dv">1360</span>,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1944</span>,   <span class="dv">18</span>,  <span class="dv">404</span>,  <span class="dv">778</span>,  <span class="dv">740</span>,  <span class="dv">663</span>, <span class="dv">2030</span>, <span class="dv">2042</span>, <span class="dv">1710</span>, <span class="dv">1178</span>,  <span class="dv">222</span>,  <span class="dv">627</span>,</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>          <span class="dv">99</span>, <span class="dv">1947</span>,  <span class="dv">361</span>,  <span class="dv">444</span>, <span class="dv">1470</span>,  <span class="dv">283</span>,   <span class="dv">84</span>,  <span class="dv">517</span>, <span class="dv">1973</span>,  <span class="dv">815</span>,  <span class="dv">553</span>,  <span class="dv">104</span>,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1660</span>,  <span class="dv">988</span>,  <span class="dv">636</span>,  <span class="dv">836</span>, <span class="dv">1294</span>, <span class="dv">1698</span>,  <span class="dv">634</span>, <span class="dv">1064</span>, <span class="dv">1292</span>, <span class="dv">1046</span>, <span class="dv">1580</span>,  <span class="dv">634</span>,</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1515</span>,  <span class="dv">225</span>, <span class="dv">1633</span>, <span class="dv">1242</span>, <span class="dv">1897</span>, <span class="dv">1180</span>, <span class="dv">1217</span>, <span class="dv">1702</span>, <span class="dv">1884</span>,  <span class="dv">881</span>,  <span class="dv">439</span>,  <span class="dv">709</span>,</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1675</span>, <span class="dv">1292</span>, <span class="dv">1474</span>,  <span class="dv">345</span>, <span class="dv">1927</span>,  <span class="dv">184</span>,  <span class="dv">698</span>, <span class="dv">1771</span>,  <span class="dv">666</span>,  <span class="dv">462</span>, <span class="dv">1978</span>,  <span class="dv">176</span>,</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>        <span class="dv">2012</span>, <span class="dv">1676</span>,   <span class="dv">40</span>, <span class="dv">1040</span>,  <span class="dv">616</span>, <span class="dv">1973</span>,  <span class="dv">372</span>, <span class="dv">1970</span>,  <span class="dv">839</span>,  <span class="dv">222</span>, <span class="dv">1373</span>,  <span class="dv">493</span>,</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>          <span class="dv">18</span>, <span class="dv">1043</span>, <span class="dv">1441</span>, <span class="dv">1320</span>, <span class="dv">1219</span>, <span class="dv">2089</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-22" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#### 2024-02-13</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-23" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>toks2 <span class="op">=</span> [</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2053</span>, <span class="dv">1049</span>, <span class="dv">2017</span>, <span class="dv">1480</span>,  <span class="dv">237</span>, <span class="dv">1188</span>,   <span class="dv">43</span>, <span class="dv">1650</span>,   <span class="dv">45</span>,  <span class="dv">546</span>,   <span class="dv">45</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>         <span class="dv">546</span>,   <span class="dv">45</span>,   <span class="dv">45</span>,   <span class="dv">45</span>,  <span class="dv">141</span>,  <span class="dv">995</span>,  <span class="dv">975</span>, <span class="dv">1188</span>,   <span class="dv">53</span>, <span class="dv">1061</span>, <span class="dv">1916</span>,  <span class="dv">185</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1975</span>, <span class="dv">1124</span>,  <span class="dv">160</span>,  <span class="dv">693</span>, <span class="dv">1468</span>,  <span class="dv">376</span>, <span class="dv">1898</span>, <span class="dv">1737</span>, <span class="dv">2025</span>,  <span class="dv">995</span>,  <span class="dv">871</span>,  <span class="dv">950</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1322</span>, <span class="dv">1059</span>, <span class="dv">1468</span>,  <span class="dv">376</span>, <span class="dv">1898</span>, <span class="dv">1741</span>,  <span class="dv">135</span>, <span class="dv">1314</span>,   <span class="dv">16</span>, <span class="dv">1611</span>, <span class="dv">1924</span>, <span class="dv">1061</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>         <span class="dv">300</span>,  <span class="dv">752</span>, <span class="dv">1969</span>, <span class="dv">1130</span>,  <span class="dv">161</span>, <span class="dv">1626</span>, <span class="dv">1335</span>,  <span class="dv">253</span>,  <span class="dv">841</span>,  <span class="dv">822</span>,  <span class="dv">118</span>, <span class="dv">1872</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1490</span>, <span class="dv">1640</span>, <span class="dv">1182</span>, <span class="dv">1585</span>, <span class="dv">1217</span>,  <span class="dv">963</span>,   <span class="dv">45</span>, <span class="dv">1481</span>, <span class="dv">2017</span>,  <span class="dv">304</span>, <span class="dv">1255</span>,  <span class="dv">141</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>         <span class="dv">301</span>,  <span class="dv">562</span>,  <span class="dv">437</span>,  <span class="dv">535</span>, <span class="dv">1240</span>,  <span class="dv">546</span>,  <span class="dv">543</span>, <span class="dv">1450</span>, <span class="dv">2033</span>,  <span class="dv">579</span>, <span class="dv">1071</span>, <span class="dv">2027</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1585</span>, <span class="dv">1217</span>, <span class="dv">1751</span>,  <span class="dv">716</span>, <span class="dv">1071</span>,  <span class="dv">524</span>, <span class="dv">1834</span>,  <span class="dv">524</span>, <span class="dv">1834</span>,  <span class="dv">524</span>, <span class="dv">1834</span>,  <span class="dv">524</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1834</span>,  <span class="dv">524</span>, <span class="dv">1834</span>,  <span class="dv">524</span>, <span class="dv">1834</span>, <span class="dv">1834</span>, <span class="dv">1834</span>, <span class="dv">1834</span>, <span class="dv">1834</span>, <span class="dv">1834</span>, <span class="dv">1834</span>, <span class="dv">1955</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>         <span class="dv">120</span>, <span class="dv">1640</span>,  <span class="dv">185</span>,   <span class="dv">72</span>, <span class="dv">1418</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>, <span class="dv">1737</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>         <span class="dv">582</span>, <span class="dv">1737</span>,  <span class="dv">528</span>,  <span class="dv">950</span>, <span class="dv">2025</span>, <span class="dv">1481</span>, <span class="dv">1481</span>, <span class="dv">1481</span>, <span class="dv">1481</span>,   <span class="dv">45</span>, <span class="dv">1343</span>,  <span class="dv">211</span>,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1339</span>,   <span class="dv">45</span>, <span class="dv">1343</span>,   <span class="dv">45</span>, <span class="dv">1420</span>, <span class="dv">1363</span>, <span class="dv">1937</span>, <span class="dv">1217</span>, <span class="dv">1578</span>, <span class="dv">1924</span>,  <span class="dv">376</span>, <span class="dv">1028</span>,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1640</span>, <span class="dv">1723</span>, <span class="dv">1182</span>,  <span class="dv">717</span>,  <span class="dv">527</span>,   <span class="dv">45</span>, <span class="dv">1032</span>,   <span class="dv">91</span>, <span class="dv">1363</span>,   <span class="dv">45</span>, <span class="dv">1408</span>, <span class="dv">1341</span>,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1280</span>,  <span class="dv">956</span>, <span class="dv">1650</span>,  <span class="dv">304</span>, <span class="dv">1341</span>, <span class="dv">1280</span>, <span class="dv">1732</span>, <span class="dv">1631</span>, <span class="dv">1061</span>,  <span class="dv">275</span>, <span class="dv">1618</span>, <span class="dv">1511</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1335</span>, <span class="dv">1327</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-26" class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> singleline_dataset.transforms <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>deltas2 <span class="op">=</span> tokenizer.decode(toks2)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>points2 <span class="op">=</span> deltas_to_points(deltas2)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>bb2 <span class="op">=</span> BoundingBox.create(points2)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>normed_points2 <span class="op">=</span> apply_transform(points2[:,:<span class="dv">2</span>], bb2.normalization_xform(scale<span class="op">=</span><span class="fl">200.0</span>))</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>normed_points2[:,<span class="dv">2</span>] <span class="op">=</span> points2[:,<span class="dv">2</span>]</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>plot_strokes(points_to_strokes(normed_points2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="50a_transformer_results_files/figure-html/cell-25-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/singleline-dataset\.andrewlook\.com\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/andrewlook/singleline_dataset/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
